@@ -73,7 +73,7 @@ export default function EventFormModal({
     try {
       if (event && event.id) {
         // Update existing event
-        const res = await fetch(`/api/events/${event.id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/events/${event.id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -86,7 +86,7 @@ export default function EventFormModal({
         if (res.ok) {
           toast.success("Wydarzenie zostało zaktualizowane");
           // Fetch updated event to get all fields
-          const updatedRes = await fetch(`/api/events/${event.id}`);
+          const updatedRes = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/events/${event.id}`);
           if (updatedRes.ok) {
             const updatedEvent = await updatedRes.json();
             onSave(updatedEvent);
@@ -107,7 +107,7 @@ export default function EventFormModal({
         }
       } else {
         // Create new event
-        const res = await fetch("/api/events", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/events`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

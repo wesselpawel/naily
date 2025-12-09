@@ -21,7 +21,7 @@ export default function ReservePhone({
     if (!phone.trim()) return;
     try {
       setSubmitting(true);
-      const res = await fetch("/api/reservations", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/reservations`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

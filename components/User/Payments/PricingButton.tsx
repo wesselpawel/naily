@@ -15,13 +15,13 @@ export default function PricingButton({
 }) {
   const dispatch = useDispatch();
   const handleSubscribe = async () => {
-    const response = await fetch("/api/stripe/subscription", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/stripe/subscription`, {
       method: "POST",
       body: JSON.stringify({
         uid: user?.uid,
         email: user?.email,
         adBudgetPLN: typeof adBudgetPLN === "number" ? adBudgetPLN : undefined,
-        successRedirect: `${process.env.NEXT_PUBLIC_URL}/success`,
+        successRedirect: `${process.env.NEXT_PUBLIC_URL || ""}/success`,
       }),
       headers: { "Content-Type": "application/json" },
     });
@@ -69,7 +69,7 @@ export default function PricingButton({
         <button
           onClick={async () => {
             try {
-              const response = await fetch(`/api/stripe/customer-portal`, {
+              const response = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/stripe/customer-portal`, {
                 method: "POST",
                 body: JSON.stringify({ uid: user?.uid }),
                 headers: { "Content-Type": "application/json" },

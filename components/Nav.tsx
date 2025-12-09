@@ -358,51 +358,51 @@ export default function Header({
                   </Link>
 
                   {isFeatureEnabled("affiliate") && (
-                    <div className="relative" ref={earnMenuRef}>
-                      <button
-                        type="button"
-                        onClick={() => setIsEarnMenuOpen((prev) => !prev)}
-                        aria-haspopup="menu"
-                        aria-expanded={isEarnMenuOpen}
-                        className={`py-3 px-5 rounded-full border ${
-                          pathname === "/login"
-                            ? "border-white"
-                            : "border-blue-700"
-                        } flex items-center gap-2 text-lg transition-colors duration-200 font-medium whitespace-nowrap ${
-                          pathname === "/login" ? "text-white" : "text-blue-700"
-                        } focus:outline-none hover:bg-gray-100/80`}
-                      >
-                        Zarabiaj z Naily <FaChevronDown className="h-4 w-4" />
-                      </button>
-                      {isEarnMenuOpen && (
-                        <div className="absolute left-0 mt-2 w-72 rounded-lg border border-neutral-200 bg-white shadow-lg p-2 z-50">
-                          {user?.uid ? (
-                            <Link
-                              href="/dashboard"
-                              onClick={() => setIsEarnMenuOpen(false)}
-                              className="block w-full text-left px-3 py-2 rounded-md hover:bg-neutral-50 text-blue-700"
-                            >
-                              Zarabiaj jako stylistka
-                            </Link>
-                          ) : (
-                            <Link
-                              href="/kreator-profilu"
-                              onClick={() => setIsEarnMenuOpen(false)}
-                              className="block w-full text-left px-3 py-2 rounded-md hover:bg-neutral-50 text-blue-700"
-                            >
-                              Zarabiaj jako stylistka
-                            </Link>
-                          )}
+                  <div className="relative" ref={earnMenuRef}>
+                    <button
+                      type="button"
+                      onClick={() => setIsEarnMenuOpen((prev) => !prev)}
+                      aria-haspopup="menu"
+                      aria-expanded={isEarnMenuOpen}
+                      className={`py-3 px-5 rounded-full border ${
+                        pathname === "/login"
+                          ? "border-white"
+                          : "border-blue-700"
+                      } flex items-center gap-2 text-lg transition-colors duration-200 font-medium whitespace-nowrap ${
+                        pathname === "/login" ? "text-white" : "text-blue-700"
+                      } focus:outline-none hover:bg-gray-100/80`}
+                    >
+                      Zarabiaj z Naily <FaChevronDown className="h-4 w-4" />
+                    </button>
+                    {isEarnMenuOpen && (
+                      <div className="absolute left-0 mt-2 w-72 rounded-lg border border-neutral-200 bg-white shadow-lg p-2 z-50">
+                        {user?.uid ? (
                           <Link
-                            href="/influencer-program"
+                            href="/dashboard"
                             onClick={() => setIsEarnMenuOpen(false)}
-                            className="block px-3 py-2 rounded-md hover:bg-neutral-50 text-blue-700"
+                            className="block w-full text-left px-3 py-2 rounded-md hover:bg-neutral-50 text-blue-700"
                           >
-                            Zarabiaj jako influencer
+                            Zarabiaj jako stylistka
                           </Link>
-                        </div>
-                      )}
-                    </div>
+                        ) : (
+                          <Link
+                            href="/kreator-profilu"
+                            onClick={() => setIsEarnMenuOpen(false)}
+                            className="block w-full text-left px-3 py-2 rounded-md hover:bg-neutral-50 text-blue-700"
+                          >
+                            Zarabiaj jako stylistka
+                          </Link>
+                        )}
+                        <Link
+                          href="/influencer-program"
+                          onClick={() => setIsEarnMenuOpen(false)}
+                          className="block px-3 py-2 rounded-md hover:bg-neutral-50 text-blue-700"
+                        >
+                          Zarabiaj jako influencer
+                        </Link>
+                      </div>
+                    )}
+                  </div>
                   )}
                   {isDashboardRoute && (
                     <button
@@ -636,25 +636,25 @@ export default function Header({
                 </Link>
 
                 {isFeatureEnabled("blog") && (
-                  <Link
-                    href="/blog"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="flex items-center gap-4 p-4 rounded-xl text-zinc-800 hover:bg-purple-50 hover:text-blue-700 transition-all duration-200 group"
-                  >
-                    <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center group-hover:bg-purple-200 transition-colors">
-                      <FaBookOpen className="text-lg text-blue-700" />
-                    </div>
-                    <div className="flex-1">
-                      <span className="font-semibold text-sm block">Blog</span>
-                      <p className="text-xs text-neutral-500 mt-0.5">
-                        Artykuły i porady
-                      </p>
-                    </div>
-                    <FaChevronRight className="text-neutral-400 group-hover:text-blue-700 transition-colors" />
-                  </Link>
+                <Link
+                  href="/blog"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-4 p-4 rounded-xl text-zinc-800 hover:bg-purple-50 hover:text-blue-700 transition-all duration-200 group"
+                >
+                  <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                    <FaBookOpen className="text-lg text-blue-700" />
+                  </div>
+                  <div className="flex-1">
+                    <span className="font-semibold text-sm block">Blog</span>
+                    <p className="text-xs text-neutral-500 mt-0.5">
+                      Artykuły i porady
+                    </p>
+                  </div>
+                  <FaChevronRight className="text-neutral-400 group-hover:text-blue-700 transition-colors" />
+                </Link>
                 )}
 
                 {user?.uid && (

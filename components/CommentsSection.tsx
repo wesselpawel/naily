@@ -7,7 +7,7 @@ export default function CommentsSection({ slug }: { slug: string }) {
   const [loading, setLoading] = useState(false);
 
   async function load() {
-    const res = await fetch(`/api/posts/${encodeURIComponent(slug)}/comments`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/posts/${encodeURIComponent(slug)}/comments`);
     const data = await res.json();
     setComments(Array.isArray(data) ? data : []);
   }
@@ -20,7 +20,7 @@ export default function CommentsSection({ slug }: { slug: string }) {
     setLoading(true);
     try {
       const res = await fetch(
-        `/api/posts/${encodeURIComponent(slug)}/comments`,
+        `${process.env.NEXT_PUBLIC_URL || ""}/api/posts/${encodeURIComponent(slug)}/comments`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -24,7 +24,7 @@ moment.locale("pl");
 async function fetchReservations(specialistUid) {
   try {
     const res = await fetch(
-      `/api/reservations?specialistUid=${encodeURIComponent(specialistUid)}`,
+      `${process.env.NEXT_PUBLIC_URL || ""}/api/reservations?specialistUid=${encodeURIComponent(specialistUid)}`,
       { cache: "no-store" }
     );
     if (!res.ok) return [];
@@ -316,7 +316,7 @@ export default function CalendarTab({ user }) {
     setEvents(prevEvents => prevEvents.filter(e => e.id !== eventId));
     
     try {
-      const res = await fetch(`/api/events/${eventId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/events/${eventId}`, {
         method: "DELETE",
       });
       if (res.ok) {

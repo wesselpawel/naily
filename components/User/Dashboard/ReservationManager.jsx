@@ -189,7 +189,7 @@ export default function ReservationManager() {
   });
 
   async function updateReservation(id, update) {
-    const res = await fetch(`/api/reservations/${encodeURIComponent(id)}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/reservations/${encodeURIComponent(id)}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(update),

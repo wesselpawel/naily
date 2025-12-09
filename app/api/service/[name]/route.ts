@@ -4,7 +4,7 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ name: string }> }
 ) {
-  const data = await fetch(`/api/services`, {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/services`, {
     next: { revalidate: 6000 },
   }).then((res) => res.json());
   const name = (await params).name;

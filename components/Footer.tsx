@@ -73,14 +73,14 @@ export default function Footer() {
                 </Link>
               </li>
               {isFeatureEnabled("blog") && (
-                <li>
-                  <Link
-                    href="/blog"
-                    className="text-neutral-300 hover:text-white transition-colors text-sm flex items-center gap-2"
-                  >
-                    Blog
-                  </Link>
-                </li>
+              <li>
+                <Link
+                  href="/blog"
+                  className="text-neutral-300 hover:text-white transition-colors text-sm flex items-center gap-2"
+                >
+                  Blog
+                </Link>
+              </li>
               )}
               <li>
                 <Link

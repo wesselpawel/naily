@@ -20,7 +20,7 @@ export default function FaqHandler({ input, setInput }: FaqHandlerProps) {
         toast.error("Podaj tytuł lub wstęp, aby wygenerować FAQ");
         return;
       }
-      const res = await fetch("/api/blog/generate-faq", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/blog/generate-faq`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -93,7 +93,7 @@ export default function NewPostPage() {
     }
     setMetaLoading(true);
     try {
-      const res = await fetch("/api/blog/generate-metadata", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/blog/generate-metadata`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

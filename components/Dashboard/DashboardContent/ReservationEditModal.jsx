@@ -35,7 +35,7 @@ export default function ReservationEditModal({
 
     setLoading(true);
     try {
-      const res = await fetch(`/api/reservations/${reservation.id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/reservations/${reservation.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -48,7 +48,7 @@ export default function ReservationEditModal({
       if (res.ok) {
         toast.success("Rezerwacja została zaktualizowana");
         // Fetch updated reservation to get all fields
-        const updatedRes = await fetch(`/api/reservations/${reservation.id}`);
+        const updatedRes = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/reservations/${reservation.id}`);
         if (updatedRes.ok) {
           const updatedReservation = await updatedRes.json();
           onSave(updatedReservation);

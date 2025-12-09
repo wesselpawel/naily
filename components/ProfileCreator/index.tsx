@@ -1097,7 +1097,7 @@ function StepLocation({
       abortRef.current = controller;
       setIsFetching(true);
       const q = createLinkFromText(query);
-      const res = await fetch(`/api/cities/${q}`, { signal: controller.signal });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/cities/${q}`, { signal: controller.signal });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = (await res.json()) as Array<{ id: string; name: string }>;
       setOptions(Array.isArray(data) ? data : []);
@@ -1139,7 +1139,7 @@ function StepLocation({
         setResultSelected(true);
         setSuppressFetch(true);
         setCityInput(opt.name);
-        const res = await fetch(`/api/city/${opt.id}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/city/${opt.id}`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const city = (await res.json()) as {
           name?: string;
@@ -1184,7 +1184,7 @@ function StepLocation({
     }
     try {
       const slug = createLinkFromText(typed);
-      const res = await fetch(`/api/city/${slug}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/city/${slug}`);
       if (res.ok) {
         const city = (await res.json()) as {
           name?: string;

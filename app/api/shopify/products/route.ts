@@ -21,11 +21,8 @@ type ShopifyAdminProduct = {
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
 
-  const domainRaw =
-    process.env.SHOPIFY_STORE_DOMAIN || "jheetu-7a.myshopify.com"; // e.g. my-store.myshopify.com
-  const accessToken =
-    process.env.SHOPIFY_ADMIN_API_ACCESS_TOKEN ||
-    "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";
+  const domainRaw = process.env.SHOPIFY_STORE_DOMAIN; // e.g. my-store.myshopify.com
+  const accessToken = process.env.SHOPIFY_ADMIN_API_ACCESS_TOKEN;
   const apiVersion = process.env.SHOPIFY_API_VERSION || "2025-07";
 
   if (!domainRaw || !accessToken) {

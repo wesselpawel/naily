@@ -45,7 +45,7 @@ export default function SettingsTab({
   const handleSubscribe = async () => {
     setIsSubscribing(true);
     try {
-      const response = await fetch("/api/stripe/subscription", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/stripe/subscription`, {
         method: "POST",
         body: JSON.stringify({
           uid: user?.uid,
@@ -69,7 +69,7 @@ export default function SettingsTab({
 
   const handleManageSubscription = async () => {
     try {
-      const response = await fetch("/api/stripe/customer-portal", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/stripe/customer-portal`, {
         method: "POST",
         body: JSON.stringify({ uid: user?.uid }),
         headers: { "Content-Type": "application/json" },

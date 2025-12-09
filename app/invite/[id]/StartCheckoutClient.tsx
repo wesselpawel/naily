@@ -15,14 +15,14 @@ export default function StartCheckoutClient({
       window.location.href = "/admin";
       return;
     }
-    const res = await fetch("/api/stripe/subscription", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/stripe/subscription`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         uid: user.uid,
         email: user.email,
         inviteId,
-        successRedirect: `${process.env.NEXT_PUBLIC_URL ?? ""}/dashboard`,
+        successRedirect: `${process.env.NEXT_PUBLIC_URL || ""}/dashboard`,
       }),
     });
     const data = await res.json();

@@ -20,7 +20,7 @@ export default function ProductCarousel({
   const [items, setItems] = useState<Product[]>([]);
 
   useEffect(() => {
-    fetch(`/api/shopify/products${query}`)
+    fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/shopify/products${query}`)
       .then((r) => r.json())
       .then((d) => setItems(d?.products || []))
       .catch(() => setItems([]));

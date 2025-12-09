@@ -43,7 +43,8 @@ export default function Logic({
         abortRef.current = controller;
         setIsFetching(true);
         const cityLink = createLinkFromText(query);
-        const response = await fetch(`/api/cities/${cityLink}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL || ""}/api/cities/${cityLink}`, {
+
           signal: controller.signal,
         });
         if (!response.ok) {

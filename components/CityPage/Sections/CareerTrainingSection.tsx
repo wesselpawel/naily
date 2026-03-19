@@ -12,7 +12,7 @@ export default function CareerTrainingSection({ city }: CareerTrainingSectionPro
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           <Link
-            href={`/szkolenia-manicure/${city.id}`}
+            href={`/kursy-stylizacji-paznokci/${city.id}`}
             className="group bg-white rounded-xl p-8 lg:p-10 hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-blue-300"
           >
             <div className="flex flex-col h-full">
@@ -50,8 +50,8 @@ export default function CareerTrainingSection({ city }: CareerTrainingSectionPro
                   Pracuj w Salonie Manicure {city.name}
                 </h3>
                 <p className="text-neutral-600 text-base font-poppins leading-relaxed">
-                  Znajdź najlepsze oferty pracy w {city.name}. Profesjonalne kariery i rozwój 
-                  umiejętności w branży beauty.
+                  Znajdź najlepsze oferty pracy manicure w {city.name}. Aktualne ogłoszenia
+                  salonów i rozwój w branży beauty.
                 </p>
               </div>
               <div className="mt-auto pt-4">
@@ -67,6 +67,7 @@ export default function CareerTrainingSection({ city }: CareerTrainingSectionPro
     </section>
   );
 }
+
 
 
 

@@ -688,13 +688,13 @@ export default async function ServiceCitySlug({
           </div>
         </div>
       </section>
-      {/* Szkolenia & Kariera Section */}
+      {/* Szkolenia i oferty pracy section */}
       <section className="py-12 px-6 bg-white">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             {/* Szkolenia Card */}
             <Link
-              href={`/szkolenia-pedicure/${city.id}`}
+              href={`/kursy-pedicure/${city.id}`}
               className="group bg-white rounded-xl p-8 lg:p-10 hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-blue-300"
             >
               <div className="flex flex-col h-full">
@@ -718,7 +718,7 @@ export default async function ServiceCitySlug({
               </div>
             </Link>
 
-            {/* Kariera Card */}
+            {/* Oferty pracy card */}
             <Link
               href={`/kariera/${city.id}`}
               className="group bg-white rounded-xl p-8 lg:p-10 hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-blue-300"
@@ -732,7 +732,8 @@ export default async function ServiceCitySlug({
                     Pracuj w salonie pedicure {city.name}
                   </h3>
                   <p className="text-neutral-600 text-base font-poppins leading-relaxed">
-                    Najlepsze oferty pracy pedicurzystka {city.name}. Kariera i rozwój umiejętności w branży beauty.
+                    Najlepsze oferty pracy pedicure {city.name}. Praca w salonach i rozwój
+                    umiejętności w branży beauty.
                   </p>
                 </div>
                 <div className="mt-auto pt-4">

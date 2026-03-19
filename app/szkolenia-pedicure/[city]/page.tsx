@@ -15,6 +15,7 @@ import TestimonialsCarousel from "@/components/Testimonials/Carousel";
 import { getCityUsers } from "@/utils/getCityUsers";
 import { getUsers as getAllUsers } from "@/utils/getUsers";
 import UserCard from "@/components/CityPage/UserCard";
+import TrainingKeywordRichContent from "@/components/CityPage/SEO/TrainingKeywordRichContent";
 
 // Enable ISR: Revalidate every hour to keep training offers fresh while maintaining fast static pages
 // Pages are generated on-demand (on first request) and then cached - no need to pre-generate all at build time
@@ -98,13 +99,20 @@ export default async function SzkoleniaPedicureCityPage({
               Kursy i szkolenia pedicure {city.name} 2026
             </h1>
             <p className="text-gray-500 font-poppins font-normal text-base sm:text-lg">
-              Profesjonalne szkolenia i kursy z pedicure w {city.name}. Ile kosztuje kurs stylizacji paznokci? Sprawdź cennik szkoleń pedicure i rozwijaj swoje umiejętności pod okiem doświadczonych instruktorek.
+              Profesjonalne szkolenia i kursy z pedicure w {city.name}. Ile kosztuje kurs stylizacji paznokci w{" "}
+              {city.name}? Sprawdź cennik szkoleń pedicure i rozwijaj swoje umiejętności pod okiem doświadczonych instruktorek.
             </p>
             <p className="text-gray-500 font-poppins text-sm mt-3">Ostatnia aktualizacja: 02.01.2026</p>
             <div className="mt-6">
-              <Logic slugCity={city.name} variant="inline" baseRoute="szkolenia-pedicure" />
+              <Logic slugCity={city.name} variant="inline" baseRoute="kursy-pedicure" />
             </div>
           </div>
+
+          <TrainingKeywordRichContent
+            city={city}
+            serviceType="pedicure"
+            userCount={sortedInstructors.length}
+          />
 
           {/* Instructors Section */}
           {sortedInstructors.length > 0 && (
@@ -405,7 +413,7 @@ export default async function SzkoleniaPedicureCityPage({
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-10 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-baloo font-bold text-zinc-800 mb-4 leading-tight">
-              Czy warto robić kurs pedicure w 2026?
+              Czy warto robić kurs pedicure w {city.name} w 2026?
             </h2>
             <p className="text-base sm:text-lg text-zinc-600 font-poppins max-w-3xl mx-auto leading-relaxed">
               Branża beauty w Polsce rozwija się dynamicznie. Zapotrzebowanie na profesjonalne usługi pedicure rośnie każdego roku, szczególnie w sezonie letnim.
@@ -498,7 +506,7 @@ export default async function SzkoleniaPedicureCityPage({
             {nearbyCities.map((c) => (
               <Link
                 key={c.id}
-                href={`/szkolenia-pedicure/${c.id}`}
+                href={`/kursy-pedicure/${c.id}`}
                 className="group py-3 relative w-max text-xl text-black hover:border-blue-800 hover:text-blue-800"
               >
                 {`Szkolenia ${c.name}`}
@@ -511,7 +519,7 @@ export default async function SzkoleniaPedicureCityPage({
 
       {/* FAQ */}
       <div className="py-20">
-        <FAQ className="animate-fade-in-up" items={szkoleniaFaq} />
+        <FAQ className="animate-fade-in-up" items={getSzkoleniaFaq(city.name)} />
       </div>
     </div>
   );
@@ -534,60 +542,62 @@ export async function generateMetadata({
   const cityData: ICity = await getSingleCity(city);
   const baseUrl = process.env.NEXT_PUBLIC_URL || "https://naily.pl";
   return {
-    title: `Kurs pedicure ${cityData.name} 2026 - Szkolenie hybryda ${cityData.name} | Ile kosztuje kurs stylizacji paznokci`,
-    description: `Kurs pedicure ${cityData.name} - sprawdź ile kosztuje kurs stylizacji paznokci w 2026. Szkolenie hybryda ${cityData.name}, opinie absolwentek kursów, ile zarobisz po kursie pedicure. Profesjonalne kursy z certyfikatami.`,
-    keywords: `kurs pedicure ${cityData.name}, szkolenie hybryda ${cityData.name}, ile kosztuje kurs stylizacji paznokci, kurs pedicure ${cityData.name} 2026, szkolenia pedicure ${cityData.name}, opinie absolwentek kursów pedicure`,
+    title: `Kurs pedicure ${cityData.name} 2026 - szkolenia pedicure hybryda`,
+    description: `Kurs pedicure ${cityData.name} 2026. Ile kosztuje kurs stylizacji paznokci i szkolenie hybryda w ${cityData.name}? Sprawdź terminy, cennik i opinie absolwentek.`,
+    keywords: `kurs pedicure ${cityData.name}, kurs pedicure ${cityData.name} 2026, szkolenie pedicure ${cityData.name}, szkolenia pedicure ${cityData.name}, szkolenie hybryda ${cityData.name}, pedicure ${cityData.name}, pedicure hybrydowy ${cityData.name}, cennik pedicure ${cityData.name}, ile kosztuje kurs stylizacji paznokci ${cityData.name}, szkolenie pedicure kosmetyczny ${cityData.name}, salon pedicure ${cityData.name}, opinie absolwentek kursów pedicure`,
     openGraph: {
       type: "website",
-      title: `Kurs pedicure ${cityData.name} 2026 - Szkolenie hybryda ${cityData.name}`,
-      description: `Kurs pedicure ${cityData.name} - sprawdź ile kosztuje kurs stylizacji paznokci. Szkolenie hybryda ${cityData.name}, opinie absolwentek, ile zarobisz po kursie.`,
+      title: `Kurs pedicure ${cityData.name} 2026`,
+      description: `Kurs pedicure ${cityData.name} 2026: cennik, szkolenia pedicure hybryda i opinie absolwentek.`,
       siteName: "Naily",
-      url: `${baseUrl}/szkolenia-pedicure/${cityData.id}`,
+      url: `${baseUrl}/kursy-pedicure/${cityData.id}`,
     },
     alternates: {
-      canonical: `${baseUrl}/szkolenia-pedicure/${cityData.id}`,
+      canonical: `${baseUrl}/kursy-pedicure/${cityData.id}`,
     },
   };
 }
 
-const szkoleniaFaq: FaqItem[] = [
-  {
-    id: "szkolenia-booking",
-    question: "Jak zapisać się na szkolenie?",
-    answer:
-      "Skontaktuj się bezpośrednio z instruktorem poprzez podany kontakt email lub telefon. Większość szkoleń wymaga wcześniejszej rezerwacji. Możesz również zarezerwować miejsce przez platformę Naily, gdzie znajdziesz dostępne terminy i szczegóły każdego kursu pedicure.",
-  },
-  {
-    id: "szkolenia-price",
-    question: "Ile kosztuje kurs stylizacji paznokci?",
-    answer:
-      "Ceny kursów pedicure w 2026 roku wahają się od 1000 do 2800 złotych, w zależności od instruktora, długości kursu i zakresu materiału. Kurs podstawowy z pedicure klasycznym kosztuje zwykle 1000-1500 zł, kurs z pedicure hybrydowym 1500-2200 zł, a kompleksowy kurs z dodatkowymi zabiegami pielęgnacyjnymi (peeling, masaż, parafina) 2200-2800 zł. Szczegóły znajdziesz w opisie każdego szkolenia.",
-  },
-  {
-    id: "szkolenia-certificate",
-    question: "Czy otrzymam certyfikat po szkoleniu?",
-    answer:
-      "Tak, większość profesjonalnych szkoleń kończy się wydaniem certyfikatu ukończenia kursu. Certyfikat potwierdza Twoje umiejętności i może być pomocny przy szukaniu pracy w salonach lub przy otwieraniu własnej działalności. Niektóre kursy oferują również certyfikaty międzynarodowe. Szczegóły dotyczące certyfikacji znajdziesz w opisie szkolenia.",
-  },
-  {
-    id: "szkolenia-level",
-    question: "Jakie są wymagania wstępne?",
-    answer:
-      "Większość kursów podstawowych nie wymaga żadnego wcześniejszego doświadczenia - są przeznaczone dla początkujących. Kursy zaawansowane mogą wymagać ukończenia kursu podstawowego lub posiadania już pewnego doświadczenia w pracy z paznokciami. Sprawdź sekcję 'Wymagania' w opisie szkolenia, aby upewnić się, że kurs jest odpowiedni dla Twojego poziomu.",
-  },
-  {
-    id: "szkolenia-earnings",
-    question: "Ile zarobię po ukończeniu kursu pedicure?",
-    answer:
-      "Zarobki po kursie pedicure zależą od wielu czynników: liczby klientek, lokalizacji, doświadczenia i oferowanych usług. Początkujące stylistki zarabiają zwykle 2500-4500 zł miesięcznie przy 15-25 klientkach. Doświadczone stylistki z 30-45 klientkami mogą zarabiać 4500-7000 zł miesięcznie. Instruktorki prowadzące własne szkolenia mogą zarabiać 7000-15000 zł miesięcznie. Zwrot z inwestycji w kurs następuje zwykle po 1-2 miesiącach pracy. W sezonie letnim zarobki mogą być nawet o 30-50% wyższe.",
-  },
-  {
-    id: "szkolenia-worth",
-    question: "Czy warto robić kurs pedicure w 2026?",
-    answer:
-      "Tak, zdecydowanie warto! Branża beauty w Polsce rozwija się dynamicznie, a zapotrzebowanie na profesjonalne usługi pedicure rośnie każdego roku, szczególnie w sezonie letnim (maj-wrzesień). Kurs pedicure to stosunkowo niska inwestycja (1000-2800 zł), która zwraca się już po 1-2 miesiącach pracy. To elastyczna praca z możliwością rozwoju kariery - od pracy w salonie, przez własne studio, aż po prowadzenie szkoleń. W 2026 roku stylistki pedicure są bardzo poszukiwane, szczególnie te z umiejętnościami w pedicure hybrydowym i zabiegach pielęgnacyjnych stóp.",
-  },
-];
+function getSzkoleniaFaq(cityName: string): FaqItem[] {
+  return [
+    {
+      id: "szkolenia-booking",
+      question: `Jak zapisać się na szkolenie w ${cityName}?`,
+      answer:
+        "Skontaktuj się bezpośrednio z instruktorem/instruktorką poprzez podany kontakt email lub telefon. Większość szkoleń wymaga wcześniejszej rezerwacji. Możesz również zarezerwować miejsce przez platformę Naily, gdzie znajdziesz dostępne terminy i szczegóły każdego kursu pedicure.",
+    },
+    {
+      id: "szkolenia-price",
+      question: `Ile kosztuje kurs stylizacji paznokci w ${cityName}?`,
+      answer:
+        "Ceny kursów pedicure w 2026 roku wahają się od 1000 do 2800 złotych, w zależności od instruktora, długości kursu i zakresu materiału. Kurs podstawowy z pedicure klasycznym kosztuje zwykle 1000-1500 zł, kurs z pedicure hybrydowym 1500-2200 zł, a kompleksowy kurs z dodatkowymi zabiegami pielęgnacyjnymi (peeling, masaż, parafina) 2200-2800 zł. Szczegóły znajdziesz w opisie każdego szkolenia.",
+    },
+    {
+      id: "szkolenia-certificate",
+      question: `Czy kurs pedicure w ${cityName} kończy się certyfikatem?`,
+      answer:
+        "Tak, większość profesjonalnych szkoleń kończy się wydaniem certyfikatu ukończenia kursu. Certyfikat potwierdza Twoje umiejętności i może być pomocny przy szukaniu pracy w salonach lub przy otwieraniu własnej działalności. Niektóre kursy oferują również certyfikaty międzynarodowe. Szczegóły dotyczące certyfikacji znajdziesz w opisie szkolenia.",
+    },
+    {
+      id: "szkolenia-level",
+      question: `Jakie są wymagania wstępne do kursu pedicure w ${cityName}?`,
+      answer:
+        "Większość kursów podstawowych nie wymaga żadnego wcześniejszego doświadczenia - są przeznaczone dla początkujących. Kursy zaawansowane mogą wymagać ukończenia kursu podstawowego lub posiadania już pewnego doświadczenia w pracy z paznokciami. Sprawdź sekcję 'Wymagania' w opisie szkolenia, aby upewnić się, że kurs jest odpowiedni dla Twojego poziomu.",
+    },
+    {
+      id: "szkolenia-earnings",
+      question: `Ile zarobię po ukończeniu kursu pedicure w ${cityName}?`,
+      answer:
+        "Zarobki po kursie pedicure zależą od wielu czynników: liczby klientek, lokalizacji, doświadczenia i oferowanych usług. Początkujące stylistki zarabiają zwykle 2500-4500 zł miesięcznie przy 15-25 klientkach. Doświadczone stylistki z 30-45 klientkami mogą zarabiać 4500-7000 zł miesięcznie. Instruktorki prowadzące własne szkolenia mogą zarabiać 7000-15000 zł miesięcznie. Zwrot z inwestycji w kurs następuje zwykle po 1-2 miesiącach pracy. W sezonie letnim zarobki mogą być nawet o 30-50% wyższe.",
+    },
+    {
+      id: "szkolenia-worth",
+      question: `Czy warto robić kurs pedicure w ${cityName} w 2026?`,
+      answer:
+        "Tak, zdecydowanie warto! Branża beauty w Polsce rozwija się dynamicznie, a zapotrzebowanie na profesjonalne usługi pedicure rośnie każdego roku, szczególnie w sezonie letnim (maj-wrzesień). Kurs pedicure to stosunkowo niska inwestycja (1000-2800 zł), która zwraca się już po 1-2 miesiącach pracy. To elastyczna praca z możliwością rozwoju kariery - od pracy w salonie, przez własne studio, aż po prowadzenie szkoleń. W 2026 roku stylistki pedicure są bardzo poszukiwane, szczególnie te z umiejętnościami w pedicure hybrydowym i zabiegach pielęgnacyjnych stóp.",
+    },
+  ];
+}
 
 
 

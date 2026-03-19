@@ -63,10 +63,11 @@ export default async function KarieraCityPage({
         <div className="container">
           <div className="mb-12">
             <h2 className="text-4xl lg:text-5xl font-baloo font-bold text-black mb-4">
-              Oferty Pracy {city.name}
+              Oferty pracy manicure {city.name}
             </h2>
             <p className="text-gray-500 max-w-2xl font-poppins font-normal">
-              Znajdź wymarzoną pracę jako manicurzystka lub pedicurzystka w {city.name}. Sprawdź aktualne oferty pracy w salonach.
+              Znajdź aktualne oferty pracy manicure i pedicure w {city.name}. Sprawdź ogłoszenia
+              salonów i warunki zatrudnienia.
             </p>
             <div className="mt-6">
               <Logic slugCity={city.name} variant="inline" baseRoute="kariera" />
@@ -227,12 +228,13 @@ export async function generateMetadata({
   const { city } = await params;
   const cityData: ICity = await getSingleCity(city);
   return {
-    title: `Oferty Pracy Manicurzystka ${cityData.name} - Kariera w Branży`,
-    description: `Znajdź pracę jako manicurzystka w ${cityData.name}. Sprawdź aktualne oferty pracy w salonach i jako freelancer.`,
+    title: `Oferty pracy manicure ${cityData.name} - ogłoszenia salonów`,
+    description: `Oferty pracy manicure i pedicure w ${cityData.name}. Sprawdź aktualne ogłoszenia salonów i aplikuj bezpośrednio.`,
+    keywords: `oferty pracy manicure ${cityData.name}, praca manicure ${cityData.name}, praca stylistka paznokci ${cityData.name}, oferty pracy pedicure ${cityData.name}, praca manicurzystka ${cityData.name}`,
     openGraph: {
       type: "website",
-      title: `Oferty Pracy Manicurzystka ${cityData.name} - Kariera w Branży`,
-      description: `Znajdź pracę jako manicurzystka w ${cityData.name}. Sprawdź aktualne oferty pracy w salonach i jako freelancer.`,
+      title: `Oferty pracy manicure ${cityData.name}`,
+      description: `Sprawdź oferty pracy manicure i pedicure w ${cityData.name}.`,
       siteName: "Naily",
     },
   };

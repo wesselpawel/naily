@@ -444,7 +444,7 @@ export default function Header({
                       pathname === "/login" ? "text-white" : "text-zinc-800"
                     }`}
                   >
-                    Kariera
+                    Oferty pracy manicure
                   </Link>
                 {/* User Actions - Secondary Navigation */}
                 <div className="flex items-center space-x-4 xl:space-x-6 ml-4 pl-4 xl:pl-6 border-l border-neutral-200">
@@ -695,7 +695,7 @@ export default function Header({
                       <FaGem className="text-base text-blue-700" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="font-semibold text-base block leading-tight">Kariera</span>
+                      <span className="font-semibold text-base block leading-tight">Oferty pracy manicure</span>
                       <p className="text-xs text-neutral-500 mt-0.5 leading-tight">
                         Oferty pracy w salonach
                       </p>

@@ -17,7 +17,8 @@ export async function GET() {
       : [];
 
   const base = [
-    { url: `${baseUrl}/szkolenia`, changefreq: "weekly", priority: 0.8 },
+    { url: `${baseUrl}/szkolenia`, changefreq: "weekly", priority: 0.7 },
+    { url: `${baseUrl}/kursy-stylizacji-paznokci`, changefreq: "weekly", priority: 0.9 },
   ];
 
   const cityEntries = cities
@@ -25,7 +26,7 @@ export async function GET() {
       const slug = c?.id || c?.name;
       if (!slug) return null;
       return {
-        url: `${baseUrl}/szkolenia-manicure/${slug}`,
+        url: `${baseUrl}/kursy-stylizacji-paznokci/${slug}`,
         changefreq: "weekly",
         priority: 0.7,
       };

@@ -36,12 +36,16 @@ export default function Breadcrumb() {
         label = "Manicure";
       } else if (segment === "pedicure") {
         label = "Pedicure";
+      } else if (segment === "kursy-stylizacji-paznokci") {
+        label = "Kursy stylizacji paznokci";
+      } else if (segment === "kursy-pedicure") {
+        label = "Kursy pedicure";
       } else if (segment === "szkolenia-manicure") {
         label = "Szkolenia Manicure";
       } else if (segment === "szkolenia-pedicure") {
         label = "Szkolenia Pedicure";
       } else if (segment === "kariera") {
-        label = "Kariera";
+        label = "Oferty pracy manicure";
       } else if (segment === "blog") {
         label = "Blog";
       } else if (segment === "kategoria") {
@@ -125,6 +129,7 @@ export default function Breadcrumb() {
     </nav>
   );
 }
+
 
 
 

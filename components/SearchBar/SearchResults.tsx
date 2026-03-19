@@ -135,7 +135,7 @@ export default function SearchResults({ query: initialQuery }: { query: string }
                   href="/kariera"
                   className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                 >
-                  Szukaj pracy
+                  Oferty pracy manicure
                 </Link>
               </div>
             </div>

@@ -16,12 +16,20 @@ export async function GET() {
       ? allCities.filter((city: ICity) => city.type === "city")
       : [];
 
+    const base = [
+      {
+        url: `${baseUrl}/kursy-pedicure`,
+        changefreq: "weekly",
+        priority: 0.8,
+      },
+    ];
+
     const cityEntries = cities
       .map((c: ICity) => {
         const slug = c?.id || c?.name;
         if (!slug) return null;
         return {
-          url: `${baseUrl}/szkolenia-pedicure/${slug}`,
+          url: `${baseUrl}/kursy-pedicure/${slug}`,
           changefreq: "weekly",
           priority: 0.7,
         };
@@ -30,6 +38,15 @@ export async function GET() {
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${base
+  .map(
+    (entry) => `  <url>
+    <loc>${entry.url}</loc>
+    <changefreq>${entry.changefreq}</changefreq>
+    <priority>${entry.priority}</priority>
+  </url>`
+  )
+  .join("\n")}
 ${cityEntries
   .map(
     (entry: any) => `  <url>
@@ -62,6 +79,7 @@ ${cityEntries
     });
   }
 }
+
 
 
 

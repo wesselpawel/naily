@@ -16,6 +16,7 @@ import { getCityUsers } from "@/utils/getCityUsers";
 import { getUsers as getAllUsers } from "@/utils/getUsers";
 import { createLinkFromText } from "@/utils/createLinkFromText";
 import UserCard from "@/components/CityPage/UserCard";
+import TrainingKeywordRichContent from "@/components/CityPage/SEO/TrainingKeywordRichContent";
 
 // Enable ISR: Revalidate every hour to keep training offers fresh while maintaining fast static pages
 // Pages are generated on-demand (on first request) and then cached - no need to pre-generate all at build time
@@ -99,13 +100,20 @@ export default async function SzkoleniaCityPage({
               Kursy i szkolenia manicure {city.name} 2026
             </h1> 
             <p className="text-gray-500 font-poppins font-normal text-base sm:text-lg">
-              Profesjonalne szkolenia i kursy z manicure w {city.name}. Ile kosztuje kurs stylizacji paznokci? Sprawdź cennik szkoleń i rozwijaj swoje umiejętności pod okiem doświadczonych instruktorek.
+              Profesjonalne szkolenia i kursy z manicure w {city.name}. Ile kosztuje kurs stylizacji paznokci w{" "}
+              {city.name}? Sprawdź cennik szkoleń i rozwijaj swoje umiejętności pod okiem doświadczonych instruktorek.
             </p>
             <p className="text-gray-500 font-poppins text-sm mt-3">Ostatnia aktualizacja: 02.01.2026</p>
             <div className="mt-6">
-              <Logic slugCity={city.name} variant="inline" baseRoute="szkolenia-manicure" />
+              <Logic slugCity={city.name} variant="inline" baseRoute="kursy-stylizacji-paznokci" />
             </div>
           </div>
+
+          <TrainingKeywordRichContent
+            city={city}
+            serviceType="manicure"
+            userCount={sortedInstructors.length}
+          />
 
           {/* Instructors Section */}
           {sortedInstructors.length > 0 && (
@@ -406,7 +414,7 @@ export default async function SzkoleniaCityPage({
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-10 sm:mb-12">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-baloo font-bold text-zinc-800 mb-4 leading-tight">
-              Czy warto robić kurs manicure w 2026?
+              Czy warto robić kurs manicure w {city.name} w 2026?
             </h2>
             <p className="text-base sm:text-lg text-zinc-600 font-poppins max-w-3xl mx-auto leading-relaxed">
               Branża beauty w Polsce rozwija się dynamicznie. Zapotrzebowanie na profesjonalne usługi manicure rośnie każdego roku.
@@ -499,7 +507,7 @@ export default async function SzkoleniaCityPage({
             {nearbyCities.map((c) => (
               <Link
                 key={c.id}
-                href={`/szkolenia-manicure/${c.id}`}
+                href={`/kursy-stylizacji-paznokci/${c.id}`}
                 className="group py-3 relative w-max text-xl text-black hover:border-blue-800 hover:text-blue-800"
               >
                 {`Szkolenia ${c.name}`}
@@ -512,7 +520,7 @@ export default async function SzkoleniaCityPage({
 
       {/* FAQ */}
       <div className="py-20">
-        <FAQ className="animate-fade-in-up" items={szkoleniaFaq} />
+        <FAQ className="animate-fade-in-up" items={getSzkoleniaFaq(city.name)} />
       </div>
     </div>
   );
@@ -535,58 +543,60 @@ export async function generateMetadata({
   const cityData: ICity = await getSingleCity(city);
   const baseUrl = process.env.NEXT_PUBLIC_URL || "https://naily.pl";
   return {
-    title: `Kursy i szkolenia manicure ${cityData.name} 2026`,
-    description: `Sprawdź ile kosztuje kurs stylizacji paznokci w 2026. Ile zarobisz po kursie manicure. Profesjonalne kursy z certyfikatami.`,
-    keywords: `kurs manicure ${cityData.name}, szkolenie hybryda ${cityData.name}, ile kosztuje kurs stylizacji paznokci, kurs manicure ${cityData.name} 2026, szkolenia manicure ${cityData.name}, opinie absolwentek kursów manicure`,
+    title: `Kurs stylizacji paznokci ${cityData.name} 2026 - szkolenia manicure hybryda`,
+    description: `Kurs stylizacji paznokci ${cityData.name} 2026. Ile kosztuje kurs manicure i szkolenie hybryda w ${cityData.name}? Sprawdź terminy, cennik i opinie absolwentek.`,
+    keywords: `kurs stylizacji paznokci ${cityData.name}, kurs stylizacji paznokci ${cityData.name} 2026, kurs manicure ${cityData.name}, szkolenia manicure ${cityData.name}, szkolenie hybryda ${cityData.name}, manicure ${cityData.name}, manicure hybrydowy ${cityData.name}, cennik kurs manicure ${cityData.name}, ile kosztuje kurs stylizacji paznokci ${cityData.name}, salon manicure ${cityData.name}, opinie absolwentek kursów manicure`,
     openGraph: {
       type: "website",
-      title: `Kurs manicure ${cityData.name} 2026 - Szkolenie hybryda ${cityData.name}`,
-      description: `Kurs manicure ${cityData.name} - sprawdź ile kosztuje kurs stylizacji paznokci. Szkolenie hybryda ${cityData.name}, opinie absolwentek, ile zarobisz po kursie.`,
+      title: `Kurs stylizacji paznokci ${cityData.name} 2026`,
+      description: `Kurs stylizacji paznokci ${cityData.name} 2026: cennik, szkolenia manicure hybryda i opinie absolwentek.`,
       siteName: "Naily",
-      url: `${baseUrl}/szkolenia-manicure/${cityData.id}`,
+      url: `${baseUrl}/kursy-stylizacji-paznokci/${cityData.id}`,
     },
     alternates: {
-      canonical: `${baseUrl}/szkolenia-manicure/${cityData.id}`,
+      canonical: `${baseUrl}/kursy-stylizacji-paznokci/${cityData.id}`,
     },
   };
 }
 
-const szkoleniaFaq: FaqItem[] = [
-  {
-    id: "szkolenia-booking",
-    question: "Jak zapisać się na szkolenie?",
-    answer:
-      "Skontaktuj się bezpośrednio z instruktorem poprzez podany kontakt email lub telefon. Większość szkoleń wymaga wcześniejszej rezerwacji. Możesz również zarezerwować miejsce przez platformę Naily, gdzie znajdziesz dostępne terminy i szczegóły każdego kursu.",
-  },
-  {
-    id: "szkolenia-price",
-    question: "Ile kosztuje kurs stylizacji paznokci?",
-    answer:
-      "Ceny kursów manicure w 2026 roku wahają się od 800 do 2500 złotych, w zależności od instruktora, długości kursu i zakresu materiału. Kurs podstawowy z manicure klasycznym kosztuje zwykle 800-1200 zł, kurs z manicure hybrydowym 1200-1800 zł, a kompleksowy kurs z przedłużaniem paznokci 1800-2500 zł. Szczegóły znajdziesz w opisie każdego szkolenia.",
-  },
-  {
-    id: "szkolenia-certificate",
-    question: "Czy otrzymam certyfikat po szkoleniu?",
-    answer:
-      "Tak, większość profesjonalnych szkoleń kończy się wydaniem certyfikatu ukończenia kursu. Certyfikat potwierdza Twoje umiejętności i może być pomocny przy szukaniu pracy w salonach lub przy otwieraniu własnej działalności. Niektóre kursy oferują również certyfikaty międzynarodowe. Szczegóły dotyczące certyfikacji znajdziesz w opisie szkolenia.",
-  },
-  {
-    id: "szkolenia-level",
-    question: "Jakie są wymagania wstępne?",
-    answer:
-      "Większość kursów podstawowych nie wymaga żadnego wcześniejszego doświadczenia - są przeznaczone dla początkujących. Kursy zaawansowane mogą wymagać ukończenia kursu podstawowego lub posiadania już pewnego doświadczenia w pracy z paznokciami. Sprawdź sekcję 'Wymagania' w opisie szkolenia, aby upewnić się, że kurs jest odpowiedni dla Twojego poziomu.",
-  },
-  {
-    id: "szkolenia-earnings",
-    question: "Ile zarobię po ukończeniu kursu manicure?",
-    answer:
-      "Zarobki po kursie manicure zależą od wielu czynników: liczby klientek, lokalizacji, doświadczenia i oferowanych usług. Początkujące stylistki zarabiają zwykle 2000-4000 zł miesięcznie przy 15-25 klientkach. Doświadczone stylistki z 30-40 klientkami mogą zarabiać 4000-6000 zł miesięcznie. Instruktorki prowadzące własne szkolenia mogą zarabiać 6000-12000 zł miesięcznie. Zwrot z inwestycji w kurs następuje zwykle po 1-2 miesiącach pracy.",
-  },
-  {
-    id: "szkolenia-worth",
-    question: "Czy warto robić kurs manicure w 2026?",
-    answer:
-      "Tak, zdecydowanie warto! Branża beauty w Polsce rozwija się dynamicznie, a zapotrzebowanie na profesjonalne usługi manicure rośnie każdego roku. Kurs manicure to stosunkowo niska inwestycja (800-2500 zł), która zwraca się już po 1-2 miesiącach pracy. To elastyczna praca z możliwością rozwoju kariery - od pracy w salonie, przez własne studio, aż po prowadzenie szkoleń. W 2026 roku stylistki paznokci są bardzo poszukiwane, szczególnie te z umiejętnościami w manicure hybrydowym i przedłużaniu paznokci.",
-  },
-];
+function getSzkoleniaFaq(cityName: string): FaqItem[] {
+  return [
+    {
+      id: "szkolenia-booking",
+      question: `Jak zapisać się na szkolenie w ${cityName}?`,
+      answer:
+        "Skontaktuj się bezpośrednio z instruktorem/instruktorką poprzez podany kontakt email lub telefon. Większość szkoleń wymaga wcześniejszej rezerwacji. Możesz również zarezerwować miejsce przez platformę Naily, gdzie znajdziesz dostępne terminy i szczegóły każdego kursu.",
+    },
+    {
+      id: "szkolenia-price",
+      question: `Ile kosztuje kurs stylizacji paznokci w ${cityName}?`,
+      answer:
+        "Ceny kursów manicure w 2026 roku wahają się od 800 do 2500 złotych, w zależności od instruktora, długości kursu i zakresu materiału. Kurs podstawowy z manicure klasycznym kosztuje zwykle 800-1200 zł, kurs z manicure hybrydowym 1200-1800 zł, a kompleksowy kurs z przedłużaniem paznokci 1800-2500 zł. Szczegóły znajdziesz w opisie każdego szkolenia.",
+    },
+    {
+      id: "szkolenia-certificate",
+      question: `Czy kurs manicure w ${cityName} kończy się certyfikatem?`,
+      answer:
+        "Tak, większość profesjonalnych szkoleń kończy się wydaniem certyfikatu ukończenia kursu. Certyfikat potwierdza Twoje umiejętności i może być pomocny przy szukaniu pracy w salonach lub przy otwieraniu własnej działalności. Niektóre kursy oferują również certyfikaty międzynarodowe. Szczegóły dotyczące certyfikacji znajdziesz w opisie szkolenia.",
+    },
+    {
+      id: "szkolenia-level",
+      question: `Jakie są wymagania wstępne do kursu manicure w ${cityName}?`,
+      answer:
+        "Większość kursów podstawowych nie wymaga żadnego wcześniejszego doświadczenia - są przeznaczone dla początkujących. Kursy zaawansowane mogą wymagać ukończenia kursu podstawowego lub posiadania już pewnego doświadczenia w pracy z paznokciami. Sprawdź sekcję 'Wymagania' w opisie szkolenia, aby upewnić się, że kurs jest odpowiedni dla Twojego poziomu.",
+    },
+    {
+      id: "szkolenia-earnings",
+      question: `Ile zarobię po ukończeniu kursu manicure w ${cityName}?`,
+      answer:
+        "Zarobki po kursie manicure zależą od wielu czynników: liczby klientek, lokalizacji, doświadczenia i oferowanych usług. Początkujące stylistki zarabiają zwykle 2000-4000 zł miesięcznie przy 15-25 klientkach. Doświadczone stylistki z 30-40 klientkami mogą zarabiać 4000-6000 zł miesięcznie. Instruktorki prowadzące własne szkolenia mogą zarabiać 6000-12000 zł miesięcznie. Zwrot z inwestycji w kurs następuje zwykle po 1-2 miesiącach pracy.",
+    },
+    {
+      id: "szkolenia-worth",
+      question: `Czy warto robić kurs manicure w ${cityName} w 2026?`,
+      answer:
+        "Tak, zdecydowanie warto! Branża beauty w Polsce rozwija się dynamicznie, a zapotrzebowanie na profesjonalne usługi manicure rośnie każdego roku. Kurs manicure to inwestycja (800-2500 zł), która zwraca się zwykle po 1-2 miesiącach pracy. To elastyczna praca z możliwością rozwoju kariery - od pracy w salonie, przez własne studio, aż po prowadzenie szkoleń. W 2026 roku kursy z manicure hybrydowym i przedłużaniem paznokci są szczególnie poszukiwane.",
+    },
+  ];
+}
 

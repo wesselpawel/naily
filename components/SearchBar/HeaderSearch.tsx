@@ -16,7 +16,7 @@ const searchTypeLabels: Record<SearchType, string> = {
   manicure: "Manicure",
   pedicure: "Pedicure",
   szkolenia: "Szkolenia",
-  kariera: "Kariera",
+  kariera: "Oferty pracy",
 };
 
 export default function HeaderSearch({
@@ -121,7 +121,7 @@ export default function HeaderSearch({
       case "pedicure":
         return `/pedicure/${citySlug}`;
       case "szkolenia":
-        return `/szkolenia-manicure/${citySlug}`;
+        return `/kursy-stylizacji-paznokci/${citySlug}`;
       case "kariera":
         return `/kariera/${citySlug}`;
       default:

@@ -17,7 +17,13 @@ export default function Logic({
 }: {
   slugCity?: string;
   variant?: "inline" | "stacked";
-  baseRoute?: "manicure" | "kariera" | "szkolenia-manicure" | "szkolenia-pedicure";
+  baseRoute?:
+    | "manicure"
+    | "kariera"
+    | "szkolenia-manicure"
+    | "szkolenia-pedicure"
+    | "kursy-stylizacji-paznokci"
+    | "kursy-pedicure";
 }) {
   const [city, setCity] = useState<City>({
     name: "",
@@ -161,7 +167,13 @@ export default function Logic({
     setIsNavigating(true);
     
     // For Szkolenia and Kariera pages, prioritize city route over service search
-    if (baseRoute === "szkolenia-manicure" || baseRoute === "szkolenia-pedicure" || baseRoute === "kariera") {
+    if (
+      baseRoute === "szkolenia-manicure" ||
+      baseRoute === "szkolenia-pedicure" ||
+      baseRoute === "kursy-stylizacji-paznokci" ||
+      baseRoute === "kursy-pedicure" ||
+      baseRoute === "kariera"
+    ) {
       // If we have a city ID from dropdown selection, use it
       if (city.id) {
         router.push(`/${baseRoute}/${city.id}`);

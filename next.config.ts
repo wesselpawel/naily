@@ -30,6 +30,30 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/szkolenia-manicure/:city",
+        destination: "/kursy-stylizacji-paznokci/:city",
+        permanent: true,
+      },
+      {
+        source: "/szkolenia-pedicure/:city",
+        destination: "/kursy-pedicure/:city",
+        permanent: true,
+      },
+      {
+        source: "/szkolenia-kursy-pedicure/:city",
+        destination: "/kursy-pedicure/:city",
+        permanent: true,
+      },
+      {
+        source: "/szkolenia-kursy-pedicure",
+        destination: "/kursy-pedicure",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

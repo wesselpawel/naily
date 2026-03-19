@@ -69,7 +69,7 @@ export default function Footer() {
                   href="/kariera"
                   className="text-neutral-300 hover:text-white transition-colors text-sm flex items-center gap-2"
                 >
-                  Kariera
+                  Oferty pracy manicure
                 </Link>
               </li>
               {isFeatureEnabled("blog") && (

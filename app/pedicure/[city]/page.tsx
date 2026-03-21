@@ -25,7 +25,7 @@ import { IService } from "@/types";
 import slug1 from "../../../public/slug/slug1.png";
 import slug2 from "../../../public/slug/slug2.png";
 import slug3 from "../../../public/slug/slug3.png";
-import Logic from "@/components/SearchBar/Logic";
+import CityHero from "@/components/CityPage/Sections/CityHero";
 import UserSliderWrapper from "@/components/CityPage/UserSliderWrapper";
 import UserCard from "@/components/CityPage/UserCard";
 import PricingTable, { type PricingItem } from "@/components/CityPage/PricingTable";
@@ -50,8 +50,8 @@ function generateStructuredData(city: ICity, serviceType: "manicure" | "pedicure
         "@type": "CollectionPage",
         "@id": `${baseUrl}/${serviceType}/${city.id}#webpage`,
         "url": `${baseUrl}/${serviceType}/${city.id}`,
-        "name": `TOP 10 PEDICURE ${city.name} - Cennik Katalog`,
-        "description": `TOP 10 najlepszych stylistek i salonów ${serviceType} ${city.name}. Pełny cennik, katalog usług i opinie.`,
+        "name": `Pedicure ${city.name} - Cennik Katalog`,
+        "description": `Najlepsze stylistki i salony pedicure ${city.name}. Pełny cennik, katalog usług i opinie.`,
         "inLanguage": "pl-PL",
         "isPartOf": {
           "@id": `${baseUrl}#website`
@@ -119,13 +119,13 @@ function generateStructuredData(city: ICity, serviceType: "manicure" | "pedicure
       {
         "@type": "ItemList",
         "@id": `${baseUrl}/${serviceType}/${city.id}#itemlist`,
-        "name": `TOP 10 PEDICURE ${city.name} - Cennik Katalog`,
-        "description": `Lista najlepszych stylistek i salonów ${serviceType} w ${city.name}`,
+        "name": `Pedicure ${city.name} - Cennik Katalog`,
+        "description": `Lista najlepszych stylistek i salonów pedicure w ${city.name}`,
         "numberOfItems": 10,
         "itemListElement": {
           "@type": "ListItem",
           "position": 1,
-          "name": `Najlepsze salony ${serviceName} w ${city.name}`
+          "name": `Najlepsze salony pedicure w ${city.name}`
         }
       }
     ]
@@ -288,7 +288,7 @@ export default async function ServiceCitySlug({
       id: "ad",
       name: "Twój profil tutaj!",
       isAd: true,
-      title: "Zarejestruj się",
+      title: "Dla stylistek z Naily",
       subtitle: "Miesiąc za darmo",
       description: "Wyświetlaj się wśród najlepszych w mieście",
       image:
@@ -385,23 +385,17 @@ export default async function ServiceCitySlug({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       
-      {/* Featured Salons Section - Modern Design */}
-      <section className="pb-20 px-6 bg-purple-50">
-        <div className="container">
-          <div className="mb-12">
-            <h1 className="text-4xl lg:text-5xl font-baloo font-bold text-black mb-4">
-              TOP 10 PEDICURE {city.name} - Cennik Katalog na 2026 rok
-            </h1>
-            <p className="text-gray-500 max-w-2xl font-poppins font-normal">
-              Sprawdzone miejsca z najwyższymi ocenami klientek i profesjonalnym pedicure. Sprawdź przewidywane ceny i katalog stylistek pedicure w swoim mieście.
-            </p>
-            {/* Inline search bar matching screenshot */}
-            <div className="mt-6">
-              <Logic slugCity={city.name} variant="inline" />
-            </div>
-            <p className="text-gray-500 font-poppins text-sm mt-3">Ostatnia aktualizacja: 06.12.2025</p>
-          </div>
+      <CityHero
+        city={city}
+        serviceType="pedicure"
+        headline={`Pedicure ${city.name} - Cennik`}
+        description="Sprawdzone miejsca z najwyższymi ocenami klientek i profesjonalnym pedicure. Sprawdź przewidywane ceny i katalog stylistek pedicure w swoim mieście."
+      />
 
+      {/* Featured Salons Section - Modern Design */}
+      <section className="py-20 px-6 bg-neutral-50">
+        <h2 className="text-3xl lg:text-4xl font-baloo font-bold text-neutral-900 mb-12 text-center">Zarezerwuj pedicure teraz</h2>
+        <div className="container">
           {/* Results single column cards */}
           {Array.isArray(sortedMergedUsers) && sortedMergedUsers.length > 0 && (
             <div className="flex flex-col gap-6 md:gap-8 mb-10">
@@ -908,7 +902,12 @@ export default async function ServiceCitySlug({
       </section>
 
       {/* Recent blog posts */}
-      <RecentPosts limit={3} columns={3} className="bg-white" />
+      <RecentPosts
+        limit={3}
+        columns={3}
+        className="bg-white"
+        allowStaticFallback={false}
+      />
 
       {/* City FAQ */}
       <div className="py-20">
@@ -943,8 +942,8 @@ export async function generateMetadata({
   const cityData: ICity = await getSingleCity(city);
   const baseUrl = process.env.NEXT_PUBLIC_URL || "https://naily.pl";
   const canonicalUrl = `${baseUrl}/pedicure/${cityData.id}`;
-  const title = `TOP 10 PEDICURE ${cityData.name} 2026 - Cennik Katalog Opinie`;
-  const description = `TOP 10 najlepszych stylistek i salonów pedicure ${cityData.name} na 2026 rok. Pełny cennik, katalog usług i opinie. Sprawdzone miejsca z najwyższymi ocenami. Rezerwuj online.`;
+  const title = `Pedicure ${cityData.name} 2026 - Cennik Katalog Opinie`;
+  const description = `Najlepsze stylistki i salony pedicure ${cityData.name}. Pełny cennik, katalog usług i opinie. Sprawdzone miejsca z najwyższymi ocenami. Rezerwuj online.`;
   const keywords = `pedicure ${cityData.name}, cennik pedicure ${cityData.name}, najlepsze salony paznokci ${cityData.name}, stylistki paznokci ${cityData.name}, pedicure hybrydowy ${cityData.name}, manicure ${cityData.name}`;
   
   return {

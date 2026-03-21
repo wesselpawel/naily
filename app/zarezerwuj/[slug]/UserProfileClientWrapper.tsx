@@ -37,21 +37,19 @@ export default function UserProfileClientWrapper({
   };
   
   return (
-    <>
-      {/* Hero Section with Banner Image or Fallback */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        <div className="max-w-7xl mx-auto mt-36 mb-12 px-4 sm:px-6 relative">
-          <UserProfileHero 
-            user={user} 
-            portfolio={portfolio} 
-            variant="fullpage"
-            onReservationOpen={() => setIsReservationModalOpen(true)}
-          />
-        </div>
-      </section>
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50/80">
+      {/* Full-width hero + overlapping card (see UserProfileHero fullpage) */}
+      <div className="">
+        <UserProfileHero
+          user={user}
+          portfolio={portfolio}
+          variant="fullpage"
+          onReservationOpen={() => setIsReservationModalOpen(true)}
+        />
+      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             <UserProfileMainContent 
@@ -68,63 +66,64 @@ export default function UserProfileClientWrapper({
             <UserProfileContact user={user} />
 
             {/* Quick Stats */}
-            <div className="bg-white rounded-2xl shadow-lg border border-neutral-200 p-6 animate-fade-in animation-delay-1000">
-              <h3 className="text-xl font-baloo font-bold text-neutral-900 mb-6 flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-white font-bold text-sm">📊</span>
-                </div>
-                Statystyki
+            <div className="animate-fade-in animation-delay-1000 rounded-2xl border border-neutral-200/90 bg-white p-6 shadow-sm">
+              <h3 className="mb-5 flex items-center gap-3 font-baloo text-xl font-bold text-neutral-900">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 text-lg text-white shadow-sm">
+                  📊
+                </span>
+                Na skrót
               </h3>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200 hover:shadow-md transition-shadow">
-                  <div className="text-3xl font-bold text-blue-600 mb-1">
-                    {user.services?.length || 0}
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  {
+                    n: user.services?.length || 0,
+                    label: "Usługi",
+                    className:
+                      "border-blue-100 bg-gradient-to-br from-blue-50 to-white text-blue-700",
+                  },
+                  {
+                    n: portfolio.length || 0,
+                    label: "Portfolio",
+                    className:
+                      "border-violet-100 bg-gradient-to-br from-violet-50 to-white text-violet-700",
+                  },
+                  {
+                    n: user.profileComments?.length || 0,
+                    label: "Opinie",
+                    className:
+                      "border-emerald-100 bg-gradient-to-br from-emerald-50 to-white text-emerald-700",
+                  },
+                  {
+                    n: user.payments?.length || 0,
+                    label: "Transakcje",
+                    className:
+                      "border-amber-100 bg-gradient-to-br from-amber-50 to-white text-amber-800",
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className={`rounded-xl border p-3 text-center transition-shadow hover:shadow-md ${item.className}`}
+                  >
+                    <div className="text-2xl font-bold tabular-nums">{item.n}</div>
+                    <div className="mt-0.5 text-xs font-medium text-neutral-600 font-poppins">
+                      {item.label}
+                    </div>
                   </div>
-                  <div className="text-sm text-neutral-700 font-medium font-poppins">
-                    Usługi
-                  </div>
-                </div>
-
-                <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200 hover:shadow-md transition-shadow">
-                  <div className="text-3xl font-bold text-purple-600 mb-1">
-                    {portfolio.length || 0}
-                  </div>
-                  <div className="text-sm text-neutral-700 font-medium font-poppins">
-                    Zdjęcia
-                  </div>
-                </div>
-
-                <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200 hover:shadow-md transition-shadow">
-                  <div className="text-3xl font-bold text-green-600 mb-1">
-                    {user.profileComments?.length || 0}
-                  </div>
-                  <div className="text-sm text-neutral-700 font-medium font-poppins">
-                    Opinie
-                  </div>
-                </div>
-
-                <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl border border-orange-200 hover:shadow-md transition-shadow">
-                  <div className="text-3xl font-bold text-orange-600 mb-1">
-                    {user.payments?.length || 0}
-                  </div>
-                  <div className="text-sm text-neutral-700 font-medium font-poppins">
-                    Transakcje
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </div>
-      
+
       <ReservationModal
         isOpen={isReservationModalOpen}
         onClose={handleModalClose}
         user={user}
         preselectedService={selectedService}
       />
-    </>
+    </div>
   );
 }
 

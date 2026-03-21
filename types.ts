@@ -193,6 +193,27 @@ export type TrainingOffer = {
 };
 
 // Job offer types
+/** Lead z formularza na stronach /manicure/[slug], /pedicure/[slug] lub modala rezerwacji — kolekcja `formLead` */
+export type FormLead = {
+  id: string;
+  name: string;
+  phone: string;
+  /** Miasto (landing) lub slug profilu / uid przy rezerwacji z profilu */
+  citySlug: string;
+  cityName?: string | null;
+  serviceType: "manicure" | "pedicure";
+  source: "city-page" | "booking-modal" | string;
+  createdAt: string;
+  path: string;
+  /** Tylko source booking-modal */
+  specialistUid?: string;
+  specialistName?: string;
+  selectedServiceName?: string | null;
+  preferredDate?: string | null;
+  preferredTime?: string | null;
+  notes?: string | null;
+};
+
 export type JobOffer = {
   id: string;
   title: string;

@@ -218,6 +218,20 @@ export async function generateMetadata({
   const profileUrl = user.userSlugUrl 
     ? `${baseUrl}/zarezerwuj/${user.userSlugUrl}`
     : `${baseUrl}/zarezerwuj/${user.uid}`;
+
+  const siteOrigin = baseUrl.replace(/\/$/, "");
+  const pickOg = (u?: string | null) => {
+    if (!u || typeof u !== "string") return `${siteOrigin}/woman.png`;
+    const t = u.trim();
+    if (t.startsWith("http://") || t.startsWith("https://")) return t;
+    if (t.startsWith("/")) return `${siteOrigin}${t}`;
+    return `${siteOrigin}/woman.png`;
+  };
+  const ogImageUrl = user.bannerUrl
+    ? pickOg(user.bannerUrl)
+    : user.logo
+      ? pickOg(user.logo)
+      : `${siteOrigin}/woman.png`;
   
   const seo = generateSeoMetadata(user);
 
@@ -253,7 +267,7 @@ export async function generateMetadata({
       siteName: "naily.pl",
       images: [
         {
-          url: user.bannerUrl || user.logo || "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&h=630&fit=crop&crop=center&auto=format",
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: `${user.name} - Profil stylistki paznokci`,
@@ -266,9 +280,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: seo.title,
       description: seo.description,
-      images: [
-        user.bannerUrl || user.logo || "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&h=630&fit=crop&crop=center&auto=format",
-      ],
+      images: [ogImageUrl],
     },
   };
 }

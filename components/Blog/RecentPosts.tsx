@@ -65,7 +65,7 @@ function getStaticPosts(limit: number) {
     }));
 }
 
-async function fetchRecent(limit = 6) {
+async function fetchRecent(limit = 6, allowStaticFallback = true) {
   try {
     // Try to fetch from Firebase first
     const [collectionDocs, legacy] = await Promise.all([
@@ -95,11 +95,18 @@ async function fetchRecent(limit = 6) {
       return normalized.slice(0, limit);
     }
 
+    // City landing pages: never show dev/static placeholder posts
+    if (!allowStaticFallback) {
+      return [];
+    }
+
     // Fallback to static blog posts (only on localhost)
     return getStaticPosts(limit);
   } catch (e) {
-    // If all else fails, use static posts (only on localhost)
     console.error("Error fetching blog posts:", e);
+    if (!allowStaticFallback) {
+      return [];
+    }
     return getStaticPosts(limit);
   }
 }
@@ -110,14 +117,17 @@ export default async function RecentPosts({
   limit = 6,
   columns = 3,
   className = "",
+  /** When false (e.g. city slugs), omit static/placeholder posts if Firebase is empty */
+  allowStaticFallback = true,
 }: {
   title?: string;
   subtitle?: string;
   limit?: number;
   columns?: 1 | 2 | 3 | 4;
   className?: string;
+  allowStaticFallback?: boolean;
 }) {
-  const posts = await fetchRecent(limit);
+  const posts = await fetchRecent(limit, allowStaticFallback);
 
   if (!posts.length) return null;
 

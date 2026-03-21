@@ -43,27 +43,54 @@ export default function ReservationModal({
     e.preventDefault();
     if (!phone.trim()) return;
 
+    const profileSlug = user.userSlugUrl || user.uid || "";
+
     try {
       setSubmitting(true);
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/reservations`,
-        {
+      const res = await fetch("/api/reservations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          specialistUid: user.uid,
+          specialistName: user.name,
+          serviceName: selectedService?.real_name || "Konsultacja",
+          customerPhone: phone.trim(),
+          preferredDate,
+          preferredTime,
+          notes,
+          sourceSlug: user.userSlugUrl,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Błąd rezerwacji");
+
+      /* Zapis leada w tej samej kolekcji co formularze miast (formLead) */
+      try {
+        const leadRes = await fetch("/api/form-lead", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
+            source: "booking-modal",
+            name: "Klientka",
+            phone: phone.trim(),
+            profileSlug,
             specialistUid: user.uid,
             specialistName: user.name,
-            serviceName: selectedService?.real_name || "Konsultacja",
-            customerPhone: phone.trim(),
-            preferredDate,
-            preferredTime,
-            notes,
-            sourceSlug: user.userSlugUrl,
+            serviceType: "manicure",
+            selectedServiceName: selectedService?.real_name ?? null,
+            preferredDate: preferredDate || null,
+            preferredTime: preferredTime || null,
+            notes: notes.trim() ? notes.trim() : null,
+            path: profileSlug ? `/zarezerwuj/${profileSlug}` : "/zarezerwuj",
           }),
+        });
+        if (!leadRes.ok) {
+          const err = await leadRes.json().catch(() => ({}));
+          console.error("[ReservationModal] formLead failed:", err);
         }
-      );
-
-      if (!res.ok) throw new Error("Błąd rezerwacji");
+      } catch (leadErr) {
+        console.error("[ReservationModal] formLead request error:", leadErr);
+      }
 
       setSuccess(true);
       setPhone("");

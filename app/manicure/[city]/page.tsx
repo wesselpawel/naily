@@ -20,11 +20,8 @@ import { type PricingItem } from "@/components/CityPage/PricingTable";
 // SEO Components
 import SchemaGenerator from "@/components/CityPage/SEO/SchemaGenerator";
 import KeywordRichContent from "@/components/CityPage/SEO/KeywordRichContent";
-import LocalBusinessList from "@/components/CityPage/SEO/LocalBusinessList";
 import ServiceAreaMap from "@/components/CityPage/SEO/ServiceAreaMap";
 import ReviewRichSnippets from "@/components/CityPage/SEO/ReviewRichSnippets";
-import PriceComparisonTable from "@/components/CityPage/SEO/PriceComparisonTable";
-
 // Page Sections
 import CityHero from "@/components/CityPage/Sections/CityHero";
 import PricingSection from "@/components/CityPage/Sections/PricingSection";
@@ -257,7 +254,7 @@ export default async function ServiceCitySlug({
       id: "ad",
       name: "Twój profil tutaj!",
       isAd: true,
-      title: "Zarejestruj się",
+      title: "Dla stylistek z Naily",
       subtitle: "Miesiąc za darmo",
       description: "Wyświetlaj się wśród najlepszych w mieście",
       image:
@@ -388,8 +385,23 @@ export default async function ServiceCitySlug({
       
       {/* Featured Salons Section */}
       {Array.isArray(sortedMergedUsers) && sortedMergedUsers.length > 0 && (
-      <section className="pb-20 px-6 bg-purple-50">
-        <div className="container">
+      <section
+        className="py-20 px-6 bg-purple-50"
+        itemScope
+        itemType="https://schema.org/ItemList"
+      >
+        <div className="container mx-auto max-w-7xl text-center mb-10 md:mb-12">
+          <h2 className="text-3xl lg:text-4xl font-baloo font-bold text-neutral-900 mb-3">
+            <span itemProp="name">
+              Najlepsze salony manicure w {city.name}
+            </span>
+          </h2>
+          <p className="text-neutral-600 font-poppins max-w-2xl mx-auto" itemProp="description">
+            Sprawdzone miejsca z najwyższymi ocenami klientek. Każdy salon przeszedł
+            weryfikację jakości — zarezerwuj wizytę u specjalistek poniżej.
+          </p>
+        </div>
+        <div className="container mx-auto max-w-7xl">
             <div className="grid grid-cols-1 gap-4 sm:gap-6 md:gap-8 mb-10">
               {sortedMergedUsers.map((u: User) => (
                     <UserCard key={u.uid} user={u} cityParam={cityParam} />
@@ -413,7 +425,7 @@ export default async function ServiceCitySlug({
                         <div className="flex flex-col gap-4">
                           <div className="mt-4 md:mt-0 mb-2 md:mb-4 flex flex-row items-start justify-between gap-3">
                             <h3 className="text-3xl font-baloo font-bold text-zinc-800 transition-colors">
-                          Zarejestruj się
+                          Dla stylistek z Naily
                             </h3>
                             <span className="inline-flex items-center rounded-full bg-primary-50 text-blue-700 px-3.5 py-1.5 text-xs md:text-sm font-inter font-medium">
                           Miesiąc za darmo
@@ -446,16 +458,8 @@ export default async function ServiceCitySlug({
                   </div>
           </div>
         </div>
+        <meta itemProp="numberOfItems" content={String(sortedMergedUsers.length)} />
       </section>
-      )}
-
-      {/* Aggressive SEO Component 2: Local Business List */}
-      {sortedMergedUsers.length > 0 && (
-        <LocalBusinessList
-          city={city}
-          serviceType="manicure"
-          users={sortedMergedUsers}
-        />
       )}
 
       {/* Aggressive SEO Component 3: Service Area Map */}
@@ -468,15 +472,6 @@ export default async function ServiceCitySlug({
       {/* Aggressive SEO Component 4: Review Rich Snippets */}
       {sortedMergedUsers.length > 0 && (
         <ReviewRichSnippets
-          city={city}
-          serviceType="manicure"
-          users={sortedMergedUsers}
-        />
-      )}
-
-      {/* Aggressive SEO Component 5: Price Comparison Table */}
-      {sortedMergedUsers.length > 0 && (
-        <PriceComparisonTable
           city={city}
           serviceType="manicure"
           users={sortedMergedUsers}
@@ -528,7 +523,12 @@ export default async function ServiceCitySlug({
       <WhyChooseSection />
 
       {/* Recent blog posts */}
-      <RecentPosts limit={3} columns={3} className="bg-white" />
+      <RecentPosts
+        limit={3}
+        columns={3}
+        className="bg-white"
+        allowStaticFallback={false}
+      />
 
 {/* Aggressive SEO Component 1: Keyword-Rich Content */}
 <KeywordRichContent
@@ -571,7 +571,7 @@ export async function generateMetadata({
   const cityData: ICity = await getSingleCity(city);
   const baseUrl = process.env.NEXT_PUBLIC_URL || "https://naily.pl";
   const canonicalUrl = `${baseUrl}/manicure/${cityData.id}`;
-  const title = `Manicure ${cityData.name} 2026`;
+  const title = `Najlepszy Manicure ${cityData.name} Ceny`;
   const description = `Najlepsze stylistki i salony manicure ${cityData.name}. Cenniki, usługi i opinie. Sprawdzone miejsca z najwyższymi ocenami. Rezerwuj online.`;
   const keywords = `manicure ${cityData.name}, cennik manicure ${cityData.name}, najlepsze salony paznokci ${cityData.name}, stylistki paznokci ${cityData.name}, manicure hybrydowy ${cityData.name}, pedicure ${cityData.name}`;
   

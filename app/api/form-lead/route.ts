@@ -2,30 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
 import { addDocument } from "@/firebase";
 
-type CityPagePayload = {
-  source?: "city-page";
+/** Jeden typ body — unika `never` przy przecięciu dwóch wariantów `source` */
+type FormLeadRequestBody = Partial<{
+  source: "city-page" | "booking-modal";
   name: string;
   phone: string;
   citySlug: string;
-  cityName?: string;
+  cityName: string;
   serviceType: "manicure" | "pedicure";
-};
-
-type BookingModalPayload = {
-  source: "booking-modal";
-  name?: string;
-  phone: string;
-  /** Profil: slug lub uid — zapisujemy w citySlug + specialistUid */
   profileSlug: string;
   specialistUid: string;
-  specialistName?: string;
-  serviceType?: "manicure" | "pedicure";
-  selectedServiceName?: string | null;
-  preferredDate?: string | null;
-  preferredTime?: string | null;
-  notes?: string | null;
-  path?: string;
-};
+  specialistName: string;
+  selectedServiceName: string | null;
+  preferredDate: string | null;
+  preferredTime: string | null;
+  notes: string | null;
+  path: string;
+}>;
 
 function sanitize(str: unknown, max = 200): string {
   if (typeof str !== "string") return "";
@@ -34,7 +27,7 @@ function sanitize(str: unknown, max = 200): string {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = (await req.json()) as Partial<CityPagePayload & BookingModalPayload>;
+    const body = (await req.json()) as FormLeadRequestBody;
 
     const id = `fl_${randomUUID()}`;
     const now = new Date().toISOString();

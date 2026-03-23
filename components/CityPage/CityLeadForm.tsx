@@ -10,6 +10,7 @@ type CityLeadFormProps = {
   serviceType: "manicure" | "pedicure";
   /** Glass style for use on dark / image hero */
   variant?: "glass" | "light";
+  isCourse?: boolean;
 };
 
 export default function CityLeadForm({
@@ -17,6 +18,7 @@ export default function CityLeadForm({
   cityName,
   serviceType,
   variant = "glass",
+  isCourse,
 }: CityLeadFormProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -107,15 +109,7 @@ export default function CityLeadForm({
             <FaWandSparkles className="h-5 w-5" aria-hidden />
           </div>
           <div>
-            <p
-              className={
-                isGlass
-                  ? "text-xs font-semibold uppercase tracking-[0.2em] text-violet-300"
-                  : "text-xs font-semibold uppercase tracking-[0.2em] text-violet-600"
-              }
-            >
-              Darmowa wycena
-            </p>
+            
             <h2
               className={
                 isGlass
@@ -123,7 +117,7 @@ export default function CityLeadForm({
                   : "mt-1 font-baloo text-2xl font-bold leading-tight text-zinc-900 md:text-3xl"
               }
             >
-              Umów wizytę w {cityName}
+              {isCourse ? "Zapisz się na kurs" : "Umów wizytę w " + cityName}
             </h2>
             <p
               className={
@@ -150,11 +144,7 @@ export default function CityLeadForm({
           </li>
           <li className="flex items-center gap-2">
             <FaShieldHalved className="h-4 w-4 shrink-0 text-sky-400" aria-hidden />
-            Bez spamu — tylko kontakt w sprawie wizyty
-          </li>
-          <li className="flex items-center gap-2">
-            <FaPhone className="h-4 w-4 shrink-0 text-fuchsia-400" aria-hidden />
-            Oddzwonimy lub napiszemy w ciągu 24h
+            {isCourse ? "Bez spamu — tylko kontakt w sprawie kursu" : "Bez spamu — tylko kontakt w sprawie wizyty"}
           </li>
         </ul>
 

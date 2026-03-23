@@ -37,9 +37,7 @@ export default function SearchBar() {
                 <div className="rounded-lg px-2 py-1 sm:px-3 sm:py-2 bg-green-400 text-white whitespace-nowrap">
                   Szkolenia
                 </div>
-                <div className="rounded-lg px-2 py-1 sm:px-3 sm:py-2 bg-purple-400 text-white whitespace-nowrap">
-                  Oferty pracy manicure
-                </div>
+                
 
                 </div>
               </div>

@@ -571,7 +571,7 @@ export async function generateMetadata({
   const cityData: ICity = await getSingleCity(city);
   const baseUrl = process.env.NEXT_PUBLIC_URL || "https://naily.pl";
   const canonicalUrl = `${baseUrl}/manicure/${cityData.id}`;
-  const title = `Najlepszy Manicure ${cityData.name} Ceny`;
+  const title = `Zarezerwuj Manicure w ${cityData.name} | Rezerwacje Online`;
   const description = `Najlepsze stylistki i salony manicure ${cityData.name}. Cenniki, usługi i opinie. Sprawdzone miejsca z najwyższymi ocenami. Rezerwuj online.`;
   const keywords = `manicure ${cityData.name}, cennik manicure ${cityData.name}, najlepsze salony paznokci ${cityData.name}, stylistki paznokci ${cityData.name}, manicure hybrydowy ${cityData.name}, pedicure ${cityData.name}`;
   

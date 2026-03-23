@@ -3,33 +3,49 @@ import { ICity } from "@/types";
 import Logic from "@/components/SearchBar/Logic";
 import CityLeadForm from "@/components/CityPage/CityLeadForm";
 
-interface CityHeroProps {
+interface TrainingCityHeroProps {
   city: ICity;
   serviceType: "manicure" | "pedicure";
+  /**
+   * Base route for Logic navigation ("Zmień miasto").
+   * Important: this affects where Logic pushes the user.
+   */
+  baseRoute:
+    | "kursy-stylizacji-paznokci"
+    | "kursy-pedicure"
+    | "szkolenia-manicure"
+    | "szkolenia-pedicure";
   /** Override default H1 */
   headline?: string;
   /** Override default subtitle */
   description?: string;
+  /** Override the "Ostatnia aktualizacja" value */
+  lastUpdated?: string;
 }
 
-export default function CityHero({
+export default function TrainingCityHero({
   city,
   serviceType,
+  baseRoute,
   headline,
   description,
-}: CityHeroProps) {
-  const serviceName = serviceType === "manicure" ? "Manicure" : "Pedicure";
+  lastUpdated,
+}: TrainingCityHeroProps) {
+  const serviceLabel = serviceType === "manicure" ? "stylizacji paznokci" : "pedicure";
+
   const title =
-    headline ?? `${serviceName} ${city.name} - Cennik 2026`;
+    headline ?? `Kurs  ${serviceLabel} ${city.name}`;
   const subtitle =
     description ??
-    `Sprawdzone miejsca z najwyższymi ocenami klientek i profesjonalnym ${serviceType}. Sprawdź przewidywane ceny i katalog stylistek ${serviceType} w swoim mieście.`;
+    `Profesjonalne szkolenia i kursy ${serviceLabel}. Ile kosztuje kurs stylizacji paznokci? Sprawdź cennik szkoleń ${serviceLabel} i rozwijaj swoje umiejętności pod okiem doświadczonych instruktorek.`;
+
+  const lastUpdatedLabel =
+    lastUpdated ?? new Date().toLocaleDateString("pl-PL");
 
   return (
     <div className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 overflow-x-clip">
-      {/* Full-bleed hero: edge-to-edge on desktop even when parent is narrow */}
+      {/* Full-bleed hero: edge-to-edge */}
       <section className="relative isolate min-h-[calc(100svh-4.75rem)] w-full overflow-hidden bg-slate-950 lg:min-h-[calc(100svh-5rem)]">
-        {/* Background photo — full section width, woman visible on the right */}
         <Image
           src="/woman.png"
           alt=""
@@ -39,7 +55,7 @@ export default function CityHero({
           sizes="100vw"
           aria-hidden
         />
-        {/* Left: readability for copy. Right: lighter so the photo stays visible (desktop) */}
+
         <div
           className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/92 to-slate-950/55 sm:via-slate-950/78 sm:to-slate-950/25 lg:from-slate-950/95 lg:via-slate-900/50 lg:via-45% lg:to-transparent"
           aria-hidden
@@ -55,15 +71,16 @@ export default function CityHero({
 
         <div className="relative z-10 mx-auto flex min-h-[calc(100svh-4.75rem)] max-w-[1600px] items-center px-5 py-12 sm:px-8 lg:min-h-[calc(100svh-5rem)] lg:px-12 xl:px-16 2xl:px-20">
           <div className="grid w-full items-center gap-10 lg:grid-cols-[1fr_minmax(280px,440px)] lg:gap-14 xl:grid-cols-[1.15fr_minmax(320px,460px)]">
-            {/* Copy + search */}
             <div className="max-w-2xl lg:max-w-none">
               <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/25 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-violet-200 backdrop-blur-sm">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.9)]" />
-                {city.name} · 2026
+                {city.name} · Kursy · 2026
               </p>
+
               <h1 className="font-baloo text-4xl font-bold leading-[1.06] text-white drop-shadow-sm sm:text-5xl lg:text-[2.75rem] xl:text-5xl 2xl:text-6xl">
                 {title}
               </h1>
+
               <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-100/95 font-poppins sm:text-lg lg:max-w-2xl">
                 {subtitle}
               </p>
@@ -73,16 +90,15 @@ export default function CityHero({
                   Zmień miasto
                 </p>
                 <div className="rounded-2xl bg-white p-2 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/80">
-                  <Logic slugCity={city.name} variant="inline" />
+                  <Logic slugCity={city.name} variant="inline" baseRoute={baseRoute} />
                 </div>
               </div>
 
               <p className="mt-6 text-xs text-white/50 font-poppins">
-                Ostatnia aktualizacja: {new Date().toLocaleDateString("pl-PL")}
+                Ostatnia aktualizacja: {lastUpdatedLabel}
               </p>
             </div>
 
-            {/* Lead form */}
             <div className="mx-auto w-full max-w-md lg:mx-0 lg:max-w-none lg:justify-self-end">
               <div className="w-full max-w-[440px] lg:ml-auto">
                 <CityLeadForm
@@ -90,7 +106,7 @@ export default function CityHero({
                   cityName={city.name}
                   serviceType={serviceType}
                   variant="glass"
-                  isCourse={false}
+                  isCourse={true}
                 />
               </div>
             </div>
@@ -100,3 +116,4 @@ export default function CityHero({
     </div>
   );
 }
+

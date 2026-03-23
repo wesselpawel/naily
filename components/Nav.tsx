@@ -300,7 +300,9 @@ export default function Header({
           pathname === "/login" && "bg-transparent"
         } top-0 left-0 right-0 z-[100] ${pathname === "/" && "bg-white"} ${
           (pathname.includes("/manicure/") ||
-            pathname.includes("/pedicure/")) &&
+            pathname.includes("/pedicure/") ||
+            pathname.includes("/kursy-stylizacji-paznokci") ||
+            pathname.includes("/kursy-pedicure")) &&
           "bg-purple-50"
         } 
         ${pathname.includes("/szkolenia") && "bg-purple-50"}
@@ -438,14 +440,7 @@ export default function Header({
                   >
                     Szkolenia
                   </Link>
-                  <Link
-                    href="/kariera"
-                    className={`text-base transition-colors duration-200 font-semibold whitespace-nowrap hover:opacity-80 ${
-                      pathname === "/login" ? "text-white" : "text-zinc-800"
-                    }`}
-                  >
-                    Oferty pracy manicure
-                  </Link>
+                 
                 {/* User Actions - Secondary Navigation */}
                 <div className="flex items-center space-x-4 xl:space-x-6 ml-4 pl-4 xl:pl-6 border-l border-neutral-200">
                   {user?.uid ? (

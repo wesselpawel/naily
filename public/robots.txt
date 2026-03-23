@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://naily.pl/sitemap.xml
 Sitemap: https://naily.pl/sitemap-1.xml
 Sitemap: https://naily.pl/sitemap-kariera.xml
 Sitemap: https://naily.pl/sitemap-szkolenia.xml

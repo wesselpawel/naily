@@ -8,7 +8,6 @@ import { Viewport } from "next";
 import Image from "next/image";
 import FAQ, { type FaqItem } from "@/components/FAQ/FAQ";
 import { FaCheck, FaMapMarkerAlt, FaClock, FaUser, FaCertificate, FaChartLine, FaDollarSign, FaGraduationCap, FaStar } from "react-icons/fa";
-import Logic from "@/components/SearchBar/Logic";
 import { fetchTrainingOffersByCity } from "@/firebase";
 import { TrainingOffer, User } from "@/types";
 import TestimonialsCarousel from "@/components/Testimonials/Carousel";
@@ -16,6 +15,7 @@ import { getCityUsers } from "@/utils/getCityUsers";
 import { getUsers as getAllUsers } from "@/utils/getUsers";
 import UserCard from "@/components/CityPage/UserCard";
 import TrainingKeywordRichContent from "@/components/CityPage/SEO/TrainingKeywordRichContent";
+import TrainingCityHero from "@/components/CityPage/Sections/TrainingCityHero";
 
 // Enable ISR: Revalidate every hour to keep training offers fresh while maintaining fast static pages
 // Pages are generated on-demand (on first request) and then cached - no need to pre-generate all at build time
@@ -32,6 +32,8 @@ export default async function SzkoleniaPedicureCityPage({
   if (city?.error) {
     return <NotFound />;
   }
+
+  const isAugustow = String(cityParam).toLowerCase() === "augustow";
 
   // Fetch training offers for this city
   const trainingOffers = await fetchTrainingOffersByCity(city.id) as TrainingOffer[];
@@ -91,28 +93,94 @@ export default async function SzkoleniaPedicureCityPage({
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Featured Training Offers Section */}
+      <TrainingCityHero
+        city={city}
+        serviceType="pedicure"
+        baseRoute="kursy-pedicure"
+        lastUpdated="02.01.2026"
+      />
+     
+          <section className="relative py-14 sm:py-16 lg:py-20 px-5 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-violet-50/30 to-violet-100/50 overflow-hidden">
+            <div className="absolute -top-20 -left-10 w-56 h-56 bg-violet-300/20 rounded-full blur-3xl" />
+            <div className="absolute -bottom-20 right-0 w-64 h-64 bg-blue-300/20 rounded-full blur-3xl" />
+
+            <div className="relative mx-auto max-w-[1600px] grid grid-cols-1 gap-8 lg:gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-stretch rounded-3xl border border-zinc-200/80 bg-white/90 backdrop-blur p-5 sm:p-8 shadow-[0_16px_50px_-28px_rgba(30,41,59,0.45)]">
+                <div className="relative w-full min-h-[260px] sm:min-h-[330px] overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100">
+                  <Image
+                    src="/pedicure/2.jpg"
+                    alt={`Kurs stylizacji paznokci ${city.name}`}
+                    fill
+                    priority
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-col justify-center">
+                  <span className="inline-flex w-max items-center rounded-full bg-blue-50 text-blue-700 border border-blue-100 px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-wide uppercase">
+                    Program kursu
+                  </span>
+                  <h2 className="mt-4 font-baloo text-3xl sm:text-4xl font-bold text-neutral-900 leading-tight">
+                    Kurs pedicure {city.name} - program i szkolenia pedicure
+                  </h2>
+                  <p className="mt-4 text-base sm:text-lg text-neutral-600 font-poppins leading-relaxed">
+                    Szukasz kursu pedicure w {city.name}? Na naszej stronie znajdziesz <b>kursy i szkolenia pedicure</b> prowadzone przez sprawdzone instruktorki. Sprawdź <b>ile kosztuje kurs pedicure w {city.name}</b>.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-stretch rounded-3xl border border-violet-200/70 bg-gradient-to-r from-violet-50/70 to-white p-5 sm:p-8 shadow-[0_16px_50px_-28px_rgba(124,58,237,0.45)]">
+                <div className="relative w-full min-h-[260px] sm:min-h-[330px] overflow-hidden rounded-2xl border border-violet-200 bg-violet-100">
+                  <Image
+                    src="/pedicure/1.jpg"
+                    alt={`Najczęściej wybierane szkolenia pedicure ${city.name}`}
+                    fill
+                    priority
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex flex-col justify-center">
+                  <span className="inline-flex w-max items-center rounded-full bg-violet-100 text-violet-700 border border-violet-200 px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-wide uppercase">
+                    Najpopularniejsze
+                  </span>
+                  <h2 className="mt-4 font-baloo text-2xl sm:text-3xl font-bold text-neutral-900 leading-tight">
+                    Najczęściej wybierane szkolenia pedicure w {city.name}
+                  </h2>
+                  <ul className="mt-5 space-y-3">
+                    <li className="flex gap-3">
+                      <div className="mt-0.5 h-6 w-6 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold shrink-0">
+                        ✓
+                      </div>
+                      <span className="text-base text-neutral-700 font-poppins leading-relaxed">
+                        <b>Kurs pedicure klasyczny {city.name}</b> - podstawy pracy, przygotowanie płytki i pierwsze zabiegi.
+                      </span>
+                    </li>
+                    <li className="flex gap-3">
+                      <div className="mt-0.5 h-6 w-6 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold shrink-0">
+                        ✓
+                      </div>
+                      <span className="text-base text-neutral-700 font-poppins leading-relaxed">
+                        <b>Kurs pedicure hybrydowy {city.name}</b> - trwałość, aplikacja i praca krok po kroku.
+                      </span>
+                    </li>
+                    <li className="flex gap-3">
+                      <div className="mt-0.5 h-6 w-6 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold shrink-0">
+                        ✓
+                      </div>
+                      <span className="text-base text-neutral-700 font-poppins leading-relaxed">
+                        <b>Kurs stylizacji i zdobień {city.name}</b> - trendy, wzory i dobór produktów.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+        
       <section className="pb-20 px-6 bg-purple-50">
         <div className="container">
-          <div className="mb-12">
-            <h1 className="text-4xl lg:text-5xl font-baloo font-bold text-black mb-4">
-              Kursy i szkolenia pedicure {city.name} 2026
-            </h1>
-            <p className="text-gray-500 font-poppins font-normal text-base sm:text-lg">
-              Profesjonalne szkolenia i kursy z pedicure w {city.name}. Ile kosztuje kurs stylizacji paznokci w{" "}
-              {city.name}? Sprawdź cennik szkoleń pedicure i rozwijaj swoje umiejętności pod okiem doświadczonych instruktorek.
-            </p>
-            <p className="text-gray-500 font-poppins text-sm mt-3">Ostatnia aktualizacja: 02.01.2026</p>
-            <div className="mt-6">
-              <Logic slugCity={city.name} variant="inline" baseRoute="kursy-pedicure" />
-            </div>
-          </div>
-
-          <TrainingKeywordRichContent
-            city={city}
-            serviceType="pedicure"
-            userCount={sortedInstructors.length}
-          />
+          
 
           {/* Instructors Section */}
           {sortedInstructors.length > 0 && (
@@ -296,183 +364,228 @@ export default async function SzkoleniaPedicureCityPage({
       </section>
 
       {/* Earnings Potential Section */}
-      <section className="py-16 sm:py-20 px-6 bg-gradient-to-br from-blue-50 to-purple-50">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-10 sm:mb-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-green-500/10 to-blue-500/10 border border-green-200/50 mb-4 sm:mb-6">
-              <FaChartLine className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" />
+      <section className="px-8 relative overflow-hidden py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-slate-100 via-blue-50 to-violet-100">
+        <div className="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-blue-400/20 blur-3xl" />
+        <div className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-violet-400/20 blur-3xl" />
+
+        <div className="relative mx-auto max-w-[1600px]">
+          <div className="text-center mb-10 sm:mb-12 lg:mb-14">
+            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/80 backdrop-blur border border-white shadow-md mb-4 sm:mb-6">
+              <FaChartLine className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600" />
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-baloo font-bold text-zinc-800 mb-4 leading-tight">
               Ile zarobisz po kursie pedicure?
             </h2>
-            <p className="text-base sm:text-lg text-zinc-600 font-poppins max-w-3xl mx-auto leading-relaxed">
-              Po ukończeniu profesjonalnego kursu pedicure możesz zarabiać od 2500 do 9000 zł miesięcznie, w zależności od liczby klientek i lokalizacji.
+            <p className="text-base sm:text-lg text-zinc-700 font-poppins max-w-3xl mx-auto leading-relaxed">
+              Realne widełki dochodów po kursie to od 2 500 do 15 000 zł miesięcznie - w zależności od doświadczenia, liczby klientek i dodatkowych usług.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg border border-green-200/50">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                  <FaDollarSign className="text-xl text-green-600" />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-10">
+            <div className="rounded-2xl border border-white/70 bg-white/80 backdrop-blur p-4 text-center shadow-sm">
+              <p className="text-xs uppercase tracking-wide text-zinc-500">Średni koszt usługi</p>
+              <p className="text-2xl font-baloo font-bold text-zinc-800 mt-1">80-250 zł</p>
+            </div>
+            <div className="rounded-2xl border border-white/70 bg-white/80 backdrop-blur p-4 text-center shadow-sm">
+              <p className="text-xs uppercase tracking-wide text-zinc-500">Próg zwrotu kursu</p>
+              <p className="text-2xl font-baloo font-bold text-zinc-800 mt-1">1-2 mies.</p>
+            </div>
+            <div className="rounded-2xl border border-white/70 bg-white/80 backdrop-blur p-4 text-center shadow-sm">
+              <p className="text-xs uppercase tracking-wide text-zinc-500">Potencjał miesięczny</p>
+              <p className="text-2xl font-baloo font-bold text-zinc-800 mt-1">2.5k-15k zł</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="group rounded-3xl p-[1px] bg-gradient-to-b from-green-300/70 to-emerald-500/60">
+              <div className="h-full rounded-3xl bg-white/95 backdrop-blur p-6 sm:p-8 shadow-lg transition-transform duration-300 group-hover:-translate-y-1">
+                <div className="flex items-center justify-between gap-4 mb-5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                      <FaDollarSign className="text-xl text-green-600" />
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-baloo font-bold text-zinc-800">
+                      Początkująca stylistka
+                    </h3>
+                  </div>
+                  <span className="text-xs font-semibold bg-green-100 text-green-700 px-3 py-1 rounded-full">
+                    START
+                  </span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-baloo font-bold text-zinc-800">
-                  Początkująca stylistka
-                </h3>
+                <div className="text-3xl sm:text-4xl font-bold text-green-600 mb-2">
+                  2 500 - 4 500 zł
+                </div>
+                <p className="text-sm sm:text-base text-zinc-600 font-poppins mb-5">
+                  miesięcznie przy 15-25 klientkach
+                </p>
+                <ul className="space-y-2.5 text-sm text-zinc-700">
+                  <li className="flex items-start gap-2">
+                    <FaCheck className="text-green-500 mt-1 flex-shrink-0" />
+                    <span>Pedicure klasyczny: 60-100 zł</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <FaCheck className="text-green-500 mt-1 flex-shrink-0" />
+                    <span>Pedicure hybrydowy: 100-150 zł</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <FaCheck className="text-green-500 mt-1 flex-shrink-0" />
+                    <span>Praca w salonie lub mobilnie</span>
+                  </li>
+                </ul>
               </div>
-              <div className="text-3xl sm:text-4xl font-bold text-green-600 mb-2">
-                2 500 - 4 500 zł
-              </div>
-              <p className="text-sm sm:text-base text-zinc-600 font-poppins mb-4">
-                miesięcznie przy 15-25 klientkach
-              </p>
-              <ul className="space-y-2 text-sm text-zinc-700">
-                <li className="flex items-start gap-2">
-                  <FaCheck className="text-green-500 mt-1 flex-shrink-0" />
-                  <span>Pedicure klasyczny: 60-100 zł</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <FaCheck className="text-green-500 mt-1 flex-shrink-0" />
-                  <span>Pedicure hybrydowy: 100-150 zł</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <FaCheck className="text-green-500 mt-1 flex-shrink-0" />
-                  <span>Praca w salonie lub mobilnie</span>
-                </li>
-              </ul>
             </div>
 
-            <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg border-2 border-blue-300 relative">
-              
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <FaChartLine className="text-xl text-blue-600" />
+            <div className="group rounded-3xl p-[1px] bg-gradient-to-b from-blue-300 to-blue-600 shadow-xl">
+              <div className="relative h-full rounded-3xl bg-gradient-to-b from-white to-blue-50/80 p-6 sm:p-8 transition-transform duration-300 group-hover:-translate-y-1">
+                
+                <div className="flex items-center gap-3 mb-5 mt-2">
+                  <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                    <FaChartLine className="text-xl text-blue-600" />
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-baloo font-bold text-zinc-800">
+                    Doświadczona stylistka
+                  </h3>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-baloo font-bold text-zinc-800">
-                  Doświadczona stylistka
-                </h3>
+                <div className="text-3xl sm:text-4xl font-bold text-blue-600 mb-2">
+                  4 500 - 7 000 zł
+                </div>
+                <p className="text-sm sm:text-base text-zinc-600 font-poppins mb-5">
+                  miesięcznie przy 30-45 klientkach
+                </p>
+                <ul className="space-y-2.5 text-sm text-zinc-700">
+                  <li className="flex items-start gap-2">
+                    <FaCheck className="text-blue-500 mt-1 flex-shrink-0" />
+                    <span>Pedicure z zabiegami: 150-250 zł</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <FaCheck className="text-blue-500 mt-1 flex-shrink-0" />
+                    <span>Peeling, masaż, parafina: +50-100 zł</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <FaCheck className="text-blue-500 mt-1 flex-shrink-0" />
+                    <span>Stałe klientki i rezerwacje</span>
+                  </li>
+                </ul>
               </div>
-              <div className="text-3xl sm:text-4xl font-bold text-blue-600 mb-2">
-                4 500 - 7 000 zł
-              </div>
-              <p className="text-sm sm:text-base text-zinc-600 font-poppins mb-4">
-                miesięcznie przy 30-45 klientkach
-              </p>
-              <ul className="space-y-2 text-sm text-zinc-700">
-                <li className="flex items-start gap-2">
-                  <FaCheck className="text-blue-500 mt-1 flex-shrink-0" />
-                  <span>Pedicure z zabiegami: 150-250 zł</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <FaCheck className="text-blue-500 mt-1 flex-shrink-0" />
-                  <span>Peeling, masaż, parafina: +50-100 zł</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <FaCheck className="text-blue-500 mt-1 flex-shrink-0" />
-                  <span>Stałe klientki i rezerwacje</span>
-                </li>
-              </ul>
             </div>
 
-            <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg border border-purple-200/50">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <FaStar className="text-xl text-purple-600" />
+            <div className="group rounded-3xl p-[1px] bg-gradient-to-b from-purple-300/70 to-violet-500/70">
+              <div className="h-full rounded-3xl bg-white/95 backdrop-blur p-6 sm:p-8 shadow-lg transition-transform duration-300 group-hover:-translate-y-1">
+                <div className="flex items-center justify-between gap-4 mb-5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                      <FaStar className="text-xl text-purple-600" />
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-baloo font-bold text-zinc-800">
+                      Ekspertka / Instruktorka
+                    </h3>
+                  </div>
+                  <span className="text-xs font-semibold bg-purple-100 text-purple-700 px-3 py-1 rounded-full">
+                    PRO
+                  </span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-baloo font-bold text-zinc-800">
-                  Ekspertka / Instruktorka
-                </h3>
+                <div className="text-3xl sm:text-4xl font-bold text-purple-600 mb-2">
+                  7 000 - 15 000 zł
+                </div>
+                <p className="text-sm sm:text-base text-zinc-600 font-poppins mb-5">
+                  miesięcznie + prowadzenie szkoleń
+                </p>
+                <ul className="space-y-2.5 text-sm text-zinc-700">
+                  <li className="flex items-start gap-2">
+                    <FaCheck className="text-purple-500 mt-1 flex-shrink-0" />
+                    <span>Własny salon lub studio</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <FaCheck className="text-purple-500 mt-1 flex-shrink-0" />
+                    <span>Prowadzenie kursów: 600-2500 zł</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <FaCheck className="text-purple-500 mt-1 flex-shrink-0" />
+                    <span>Premium klientki i eventy</span>
+                  </li>
+                </ul>
               </div>
-              <div className="text-3xl sm:text-4xl font-bold text-purple-600 mb-2">
-                7 000 - 15 000 zł
-              </div>
-              <p className="text-sm sm:text-base text-zinc-600 font-poppins mb-4">
-                miesięcznie + prowadzenie szkoleń
-              </p>
-              <ul className="space-y-2 text-sm text-zinc-700">
-                <li className="flex items-start gap-2">
-                  <FaCheck className="text-purple-500 mt-1 flex-shrink-0" />
-                  <span>Własny salon lub studio</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <FaCheck className="text-purple-500 mt-1 flex-shrink-0" />
-                  <span>Prowadzenie kursów: 600-2500 zł</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <FaCheck className="text-purple-500 mt-1 flex-shrink-0" />
-                  <span>Premium klientki i eventy</span>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
       </section>
 
       {/* Is It Worth It Section */}
-      <section className="py-16 sm:py-20 px-6 bg-white">
-        <div className="container mx-auto max-w-4xl">
+      <section className="py-16 sm:py-20 lg:py-24 px-6 bg-gradient-to-b from-white via-slate-50/60 to-white">
+        <div className="mx-auto max-w-6xl">
           <div className="text-center mb-10 sm:mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-baloo font-bold text-zinc-800 mb-4 leading-tight">
+            <span className="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-wide uppercase">
+              Analiza opłacalności
+            </span>
+            <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-baloo font-bold text-zinc-800 leading-tight">
               Czy warto robić kurs pedicure w {city.name} w 2026?
             </h2>
-            <p className="text-base sm:text-lg text-zinc-600 font-poppins max-w-3xl mx-auto leading-relaxed">
+            <p className="mt-4 text-base sm:text-lg text-zinc-600 font-poppins max-w-3xl mx-auto leading-relaxed">
               Branża beauty w Polsce rozwija się dynamicznie. Zapotrzebowanie na profesjonalne usługi pedicure rośnie każdego roku, szczególnie w sezonie letnim.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-blue-200">
-              <h3 className="text-xl sm:text-2xl font-baloo font-bold text-zinc-800 mb-4 flex items-center gap-3">
-                <FaCheck className="text-green-600 text-2xl" />
-                Zalety kursu pedicure
-              </h3>
-              <ul className="space-y-3 text-sm sm:text-base text-zinc-700 font-poppins">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-600 font-bold">✓</span>
-                  <span><strong>Wyższe zarobki:</strong> Średnia pensja stylistki pedicure to 4000-6000 zł miesięcznie</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-600 font-bold">✓</span>
-                  <span><strong>Sezonowość:</strong> Większe zapotrzebowanie w sezonie letnim (maj-wrzesień)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-600 font-bold">✓</span>
-                  <span><strong>Rozwój kariery:</strong> Możliwość otwarcia własnego salonu lub prowadzenia szkoleń</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-600 font-bold">✓</span>
-                  <span><strong>Kreatywna praca:</strong> Codzienna możliwość tworzenia unikalnych stylizacji stóp</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-600 font-bold">✓</span>
-                  <span><strong>Niski próg wejścia:</strong> Kurs trwa zwykle 2-5 dni, kosztuje 1000-2800 zł</span>
-                </li>
-              </ul>
+            <div className="rounded-3xl p-[1px] bg-gradient-to-b from-blue-200 to-cyan-300 shadow-[0_16px_50px_-28px_rgba(14,116,144,0.45)]">
+              <div className="h-full rounded-3xl bg-gradient-to-br from-blue-50 to-cyan-50 p-6 sm:p-8 border border-blue-100">
+                <h3 className="text-xl sm:text-2xl font-baloo font-bold text-zinc-800 mb-5 flex items-center gap-3">
+                  <span className="inline-flex w-11 h-11 rounded-xl bg-white text-green-600 items-center justify-center shadow-sm">
+                    <FaCheck className="text-2xl" />
+                  </span>
+                  Zalety kursu pedicure
+                </h3>
+                <ul className="space-y-4 text-sm sm:text-base text-zinc-700 font-poppins">
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold mt-0.5">✓</span>
+                    <span><strong>Wyższe zarobki:</strong> Średnia pensja stylistki pedicure to 4000-6000 zł miesięcznie</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold mt-0.5">✓</span>
+                    <span><strong>Sezonowość:</strong> Większe zapotrzebowanie w sezonie letnim (maj-wrzesień)</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold mt-0.5">✓</span>
+                    <span><strong>Rozwój kariery:</strong> Możliwość otwarcia własnego salonu lub prowadzenia szkoleń</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold mt-0.5">✓</span>
+                    <span><strong>Kreatywna praca:</strong> Codzienna możliwość tworzenia unikalnych stylizacji stóp</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold mt-0.5">✓</span>
+                    <span><strong>Niski próg wejścia:</strong> Kurs trwa zwykle 2-5 dni, kosztuje 1000-2800 zł</span>
+                  </li>
+                </ul>
+              </div>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-purple-200">
-              <h3 className="text-xl sm:text-2xl font-baloo font-bold text-zinc-800 mb-4 flex items-center gap-3">
-                <FaChartLine className="text-purple-600 text-2xl" />
-                Czas zwrotu inwestycji
-              </h3>
-              <div className="space-y-4">
-                <div className="bg-white rounded-lg p-4 border border-purple-200">
-                  <div className="text-sm text-zinc-600 mb-1">Koszt kursu</div>
-                  <div className="text-2xl font-bold text-purple-600">1 000 - 2 800 zł</div>
+            <div className="rounded-3xl p-[1px] bg-gradient-to-b from-violet-200 to-fuchsia-300 shadow-[0_16px_50px_-28px_rgba(124,58,237,0.45)]">
+              <div className="h-full rounded-3xl bg-gradient-to-br from-violet-50 to-fuchsia-50 p-6 sm:p-8 border border-violet-100">
+                <h3 className="text-xl sm:text-2xl font-baloo font-bold text-zinc-800 mb-5 flex items-center gap-3">
+                  <span className="inline-flex w-11 h-11 rounded-xl bg-white text-purple-600 items-center justify-center shadow-sm">
+                    <FaChartLine className="text-2xl" />
+                  </span>
+                  Czas zwrotu inwestycji
+                </h3>
+                <div className="space-y-4">
+                  <div className="bg-white rounded-xl p-4 sm:p-5 border border-violet-200/70 shadow-sm">
+                    <div className="text-sm text-zinc-500 mb-1">Koszt kursu</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-purple-600">1 000 - 2 800 zł</div>
+                  </div>
+                  <div className="bg-white rounded-xl p-4 sm:p-5 border border-violet-200/70 shadow-sm">
+                    <div className="text-sm text-zinc-500 mb-1">Średni zarobek miesięczny</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-purple-600">4 000 - 6 000 zł</div>
+                  </div>
+                  <div className="bg-gradient-to-r from-purple-600 via-violet-600 to-blue-600 rounded-xl p-4 sm:p-5 text-white shadow-md">
+                    <div className="text-sm mb-1 opacity-90">Zwrot inwestycji</div>
+                    <div className="text-3xl font-bold leading-tight">1-2 miesiące</div>
+                    <div className="text-sm mt-1 opacity-80">Przy pracy z 20-30 klientkami miesięcznie</div>
+                  </div>
                 </div>
-                <div className="bg-white rounded-lg p-4 border border-purple-200">
-                  <div className="text-sm text-zinc-600 mb-1">Średni zarobek miesięczny</div>
-                  <div className="text-2xl font-bold text-purple-600">4 000 - 6 000 zł</div>
-                </div>
-                <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg p-4 text-white">
-                  <div className="text-sm mb-1 opacity-90">Zwrot inwestycji</div>
-                  <div className="text-2xl font-bold">1-2 miesiące</div>
-                  <div className="text-sm mt-1 opacity-80">Przy pracy z 20-30 klientkami miesięcznie</div>
-                </div>
+                <p className="text-sm text-zinc-600 mt-4 font-poppins">
+                  * Kalkulacja oparta na średnich cenach kursów i zarobków stylistek w Polsce w 2026 roku
+                </p>
               </div>
-              <p className="text-sm text-zinc-600 mt-4 font-poppins">
-                * Kalkulacja oparta na średnich cenach kursów i zarobków stylistek w Polsce w 2026 roku
-              </p>
             </div>
           </div>
         </div>
@@ -542,12 +655,12 @@ export async function generateMetadata({
   const cityData: ICity = await getSingleCity(city);
   const baseUrl = process.env.NEXT_PUBLIC_URL || "https://naily.pl";
   return {
-    title: `Kurs pedicure ${cityData.name} 2026 - szkolenia pedicure hybryda`,
+    title: `Kurs pedicure ${cityData.name} - Ile kosztuje?`,
     description: `Kurs pedicure ${cityData.name} 2026. Ile kosztuje kurs stylizacji paznokci i szkolenie hybryda w ${cityData.name}? Sprawdź terminy, cennik i opinie absolwentek.`,
     keywords: `kurs pedicure ${cityData.name}, kurs pedicure ${cityData.name} 2026, szkolenie pedicure ${cityData.name}, szkolenia pedicure ${cityData.name}, szkolenie hybryda ${cityData.name}, pedicure ${cityData.name}, pedicure hybrydowy ${cityData.name}, cennik pedicure ${cityData.name}, ile kosztuje kurs stylizacji paznokci ${cityData.name}, szkolenie pedicure kosmetyczny ${cityData.name}, salon pedicure ${cityData.name}, opinie absolwentek kursów pedicure`,
     openGraph: {
       type: "website",
-      title: `Kurs pedicure ${cityData.name} 2026`,
+      title: `Kurs pedicure ${cityData.name} - Ile kosztuje?`,
       description: `Kurs pedicure ${cityData.name} 2026: cennik, szkolenia pedicure hybryda i opinie absolwentek.`,
       siteName: "Naily",
       url: `${baseUrl}/kursy-pedicure/${cityData.id}`,

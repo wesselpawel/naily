@@ -15,8 +15,10 @@ import { getCityUsers } from "@/utils/getCityUsers";
 import { getUsers as getAllUsers } from "@/utils/getUsers";
 import { createLinkFromText } from "@/utils/createLinkFromText";
 import UserCard from "@/components/CityPage/UserCard";
-import TrainingKeywordRichContent from "@/components/CityPage/SEO/TrainingKeywordRichContent";
 import TrainingCityHero from "@/components/CityPage/Sections/TrainingCityHero";
+import ManicureKursyProgrammaticArticle from "@/components/CityPage/SEO/ManicureKursyProgrammaticArticle";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
+import { getPolishCityForms, type PolishCityForms } from "@/utils/polishCityGrammar";
 
 // Enable ISR: Revalidate every hour to keep training offers fresh while maintaining fast static pages
 // Pages are generated on-demand (on first request) and then cached - no need to pre-generate all at build time
@@ -34,7 +36,7 @@ export default async function SzkoleniaCityPage({
     return <NotFound />;
   }
 
-  const isAugustow = String(cityParam).toLowerCase() === "augustow";
+  const grammar = getPolishCityForms(city);
 
   // Fetch training offers for this city
   const trainingOffers = await fetchTrainingOffersByCity(city.id) as TrainingOffer[];
@@ -92,6 +94,8 @@ export default async function SzkoleniaCityPage({
     },
   ];
 
+  const faqItems = getSzkoleniaFaq(grammar);
+
   return (
     <div className="min-h-screen bg-white">
       <TrainingCityHero
@@ -99,84 +103,12 @@ export default async function SzkoleniaCityPage({
         serviceType="manicure"
         baseRoute="kursy-stylizacji-paznokci"
         lastUpdated="02.01.2026"
+        headline={`Kurs stylizacji paznokci ${city.name} – ceny, szkolenia i terminy 2026`}
+        description={`Szukasz profesjonalnego kursu stylizacji paznokci w ${grammar.locative}? Sprawdź aktualne szkolenia manicure i zdobień paznokci prowadzone przez doświadczone instruktorki. Dowiedz się, ile kosztuje kurs, co obejmuje program oraz jak szybko możesz zacząć zarabiać jako stylistka paznokci.`}
       />
-     
-        
-          <section className="relative py-14 sm:py-16 lg:py-20 px-5 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-violet-50/30 to-violet-100/50 overflow-hidden">
-            <div className="absolute -top-20 -left-10 w-56 h-56 bg-violet-300/20 rounded-full blur-3xl" />
-            <div className="absolute -bottom-20 right-0 w-64 h-64 bg-blue-300/20 rounded-full blur-3xl" />
 
-            <div className="relative mx-auto max-w-[1600px] grid grid-cols-1 gap-8 lg:gap-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-stretch rounded-3xl border border-zinc-200/80 bg-white/90 backdrop-blur p-5 sm:p-8 shadow-[0_16px_50px_-28px_rgba(30,41,59,0.45)]">
-                <div className="relative w-full min-h-[260px] sm:min-h-[330px] overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100">
-                  <Image
-                    src="/resource/20.jpg"
-                    alt="Kurs stylizacji paznokci w Augustów"
-                    fill
-                    priority
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="flex flex-col justify-center">
-                 
-                  <h2 className="mt-4 font-baloo text-3xl sm:text-4xl font-bold text-neutral-900 leading-tight">
-                    Kurs stylizacji paznokci {city.name} - program i szkolenia manicure
-                  </h2>
-                  <p className="mt-4 text-base sm:text-lg text-neutral-600 font-poppins leading-relaxed">
-                    Szukasz <b>kursu stylizacji paznokci</b> w {city.name}? Na naszej stronie znajdziesz <b>kursy i szkolenia manicure</b> (w tym <b>manicure
-                    hybrydowy</b>) prowadzone przez sprawdzone instruktorki. Sprawdź <b>ile kosztuje kurs stylizacji paznokci w {city.name}</b>.
-                  </p>
-                </div>
-              </div>
+      <ManicureKursyProgrammaticArticle forms={grammar} nearbyCities={nearbyCities} basePath="kursy-stylizacji-paznokci" />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-stretch rounded-3xl border border-violet-200/70 bg-gradient-to-r from-violet-50/70 to-white p-5 sm:p-8 shadow-[0_16px_50px_-28px_rgba(124,58,237,0.45)]">
-                <div className="relative w-full min-h-[260px] sm:min-h-[330px] overflow-hidden rounded-2xl border border-violet-200 bg-violet-100">
-                  <Image
-                    src="/resource/6.jpg"
-                    alt="Najczęściej wybierane szkolenia w Augustów"
-                    fill
-                    priority
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="flex flex-col justify-center">
-                  
-                  <h2 className="mt-4 font-baloo text-2xl sm:text-3xl font-bold text-neutral-900 leading-tight">
-                    Najczęściej wybierane szkolenia manicure w {city.name}
-                  </h2>
-                  <ul className="mt-5 space-y-3">
-                    <li className="flex gap-3">
-                      <span className="mt-0.5 h-6 w-6 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold shrink-0">
-                        ✓
-                      </span>
-                      <span className="text-base text-neutral-700 font-poppins leading-relaxed">
-                        <b>Kurs manicure klasyczny {city.name}</b> - podstawy pracy, przygotowanie płytki i pierwsze stylizacje.
-                      </span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="mt-0.5 h-6 w-6 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold shrink-0">
-                        ✓
-                      </span>
-                      <span className="text-base text-neutral-700 font-poppins leading-relaxed">
-                        <b>Szkolenie manicure hybrydowy {city.name}</b> - trwałość, aplikacja i praca krok po kroku.
-                      </span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="mt-0.5 h-6 w-6 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold shrink-0">
-                        ✓
-                      </span>
-                      <span className="text-base text-neutral-700 font-poppins leading-relaxed">
-                        <b>Kurs stylizacji i zdobień {city.name}</b> - trendy, wzory i dobór produktów.
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </section>
-        
       <section className="pb-20 px-6 bg-purple-50">
         <div className="container">
         
@@ -517,7 +449,7 @@ export default async function SzkoleniaCityPage({
               Analiza opłacalności
             </span>
             <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-baloo font-bold text-zinc-800 leading-tight">
-              Czy warto robić kurs manicure w {city.name} w 2026?
+              Czy warto robić kurs manicure w {grammar.locative} w 2026?
             </h2>
             <p className="mt-4 text-base sm:text-lg text-zinc-600 font-poppins max-w-3xl mx-auto leading-relaxed">
               Branża beauty w Polsce rozwija się dynamicznie. Zapotrzebowanie na profesjonalne usługi manicure rośnie każdego roku.
@@ -601,7 +533,7 @@ export default async function SzkoleniaCityPage({
               Opinie absolwentek kursów manicure
             </h2>
             <p className="text-base sm:text-lg text-zinc-600 font-poppins max-w-3xl mx-auto leading-relaxed">
-              Zobacz, co mówią stylistki, które ukończyły kursy manicure i już pracują w zawodzie
+              Zobacz, co mówią stylistki z {grammar.locative} i okolic, które ukończyły kursy manicure i już pracują w zawodzie
             </p>
           </div>
           <TestimonialsCarousel />
@@ -631,7 +563,12 @@ export default async function SzkoleniaCityPage({
 
       {/* FAQ */}
       <div className="py-20">
-        <FAQ className="animate-fade-in-up" items={getSzkoleniaFaq(city.name)} />
+        <FaqJsonLd items={faqItems} />
+        <FAQ
+          className="animate-fade-in-up"
+          title={`❓ Najczęściej zadawane pytania – kurs paznokci ${grammar.nominative}`}
+          items={faqItems}
+        />
       </div>
     </div>
   );
@@ -653,14 +590,17 @@ export async function generateMetadata({
   const { city } = await params;
   const cityData: ICity = await getSingleCity(city);
   const baseUrl = process.env.NEXT_PUBLIC_URL || "https://naily.pl";
+  const forms = getPolishCityForms(cityData);
+  const metaTitle = `Kurs stylizacji paznokci ${cityData.name} 2026 – ceny, szkolenia, zapisy`;
+  const metaDescription = `Sprawdź kursy stylizacji paznokci w ${forms.locative}. Aktualne ceny, program szkoleń i terminy 2026. Zapisz się i zacznij zarabiać jako stylistka paznokci.`;
   return {
-    title: `Kurs stylizacji paznokci ${cityData.name} - Ile kosztuje?`,
-    description: `Kurs stylizacji paznokci ${cityData.name}. Ile kosztuje kurs manicure i szkolenie ${cityData.name}? Sprawdź terminy, cennik i opinie absolwentek.`,
-    keywords: `kurs stylizacji paznokci ${cityData.name}, kurs stylizacji paznokci ${cityData.name} 2026, kurs manicure ${cityData.name}, szkolenia manicure ${cityData.name}, szkolenie hybryda ${cityData.name}, manicure ${cityData.name}, manicure hybrydowy ${cityData.name}, cennik kurs manicure ${cityData.name}, ile kosztuje kurs stylizacji paznokci ${cityData.name}, salon manicure ${cityData.name}, opinie absolwentek kursów manicure`,
+    title: metaTitle,
+    description: metaDescription,
+    keywords: `kurs stylizacji paznokci ${cityData.name}, kurs paznokci ${cityData.name} cena, szkolenie manicure ${cityData.name}, kurs manicure hybrydowy ${cityData.name}, kurs paznokci dla początkujących ${cityData.name}, kurs stylizacji paznokci ${cityData.name} 2026, szkolenia manicure ${cityData.name}, manicure ${cityData.name}`,
     openGraph: {
       type: "website",
-      title: `Kurs stylizacji paznokci ${cityData.name} 2026`,
-      description: `Kurs stylizacji paznokci ${cityData.name} 2026: cennik, szkolenia manicure hybryda i opinie absolwentek.`,
+      title: metaTitle,
+      description: metaDescription,
       siteName: "Naily",
       url: `${baseUrl}/kursy-stylizacji-paznokci/${cityData.id}`,
     },
@@ -670,41 +610,60 @@ export async function generateMetadata({
   };
 }
 
-function getSzkoleniaFaq(cityName: string): FaqItem[] {
+function getSzkoleniaFaq(forms: PolishCityForms): FaqItem[] {
+  const { locative } = forms;
   return [
     {
-      id: "szkolenia-booking",
-      question: `Jak zapisać się na szkolenie w ${cityName}?`,
+      id: "faq-duration",
+      question: "Ile trwa kurs stylizacji paznokci?",
       answer:
-        "Skontaktuj się bezpośrednio z instruktorem/instruktorką poprzez podany kontakt email lub telefon. Większość szkoleń wymaga wcześniejszej rezerwacji. Możesz również zarezerwować miejsce przez platformę Naily, gdzie znajdziesz dostępne terminy i szczegóły każdego kursu.",
+        "Zazwyczaj od 1 do 5 dni, w zależności od poziomu zaawansowania i zakresu programu (np. sam manicure hybrydowy vs. pełny kurs z przedłużaniem).",
+    },
+    {
+      id: "faq-certificate",
+      question: "Czy kurs kończy się certyfikatem?",
+      answer:
+        "Tak, większość szkoleń oferuje certyfikat ukończenia. Szczegóły znajdziesz w opisie wybranego kursu u instruktorki.",
+    },
+    {
+      id: "faq-experience",
+      question: "Czy potrzebne jest doświadczenie?",
+      answer:
+        "Nie – dostępne są kursy dla początkujących bez wcześniejszej praktyki. Kursy zaawansowane mogą wymagać podstaw.",
+    },
+    {
+      id: "szkolenia-booking",
+      question: `Jak zapisać się na kurs w ${locative}?`,
+      answer:
+        "Najlepiej przez platformę Naily (wybierz instruktorkę, termin i szczegóły szkolenia) albo bezpośrednio u instruktorki – email lub telefon z karty oferty. Większość szkoleń wymaga wcześniejszej rezerwacji.",
     },
     {
       id: "szkolenia-price",
-      question: `Ile kosztuje kurs stylizacji paznokci w ${cityName}?`,
+      question: `Ile kosztuje kurs stylizacji paznokci w ${locative}?`,
       answer:
         "Ceny kursów manicure w 2026 roku wahają się od 800 do 2500 złotych, w zależności od instruktora, długości kursu i zakresu materiału. Kurs podstawowy z manicure klasycznym kosztuje zwykle 800-1200 zł, kurs z manicure hybrydowym 1200-1800 zł, a kompleksowy kurs z przedłużaniem paznokci 1800-2500 zł. Szczegóły znajdziesz w opisie każdego szkolenia.",
     },
     {
       id: "szkolenia-certificate",
-      question: `Czy kurs manicure w ${cityName} kończy się certyfikatem?`,
+      question: `Czy kurs manicure w ${locative} kończy się certyfikatem?`,
       answer:
         "Tak, większość profesjonalnych szkoleń kończy się wydaniem certyfikatu ukończenia kursu. Certyfikat potwierdza Twoje umiejętności i może być pomocny przy szukaniu pracy w salonach lub przy otwieraniu własnej działalności. Niektóre kursy oferują również certyfikaty międzynarodowe. Szczegóły dotyczące certyfikacji znajdziesz w opisie szkolenia.",
     },
     {
       id: "szkolenia-level",
-      question: `Jakie są wymagania wstępne do kursu manicure w ${cityName}?`,
+      question: `Jakie są wymagania wstępne do kursu manicure w ${locative}?`,
       answer:
         "Większość kursów podstawowych nie wymaga żadnego wcześniejszego doświadczenia - są przeznaczone dla początkujących. Kursy zaawansowane mogą wymagać ukończenia kursu podstawowego lub posiadania już pewnego doświadczenia w pracy z paznokciami. Sprawdź sekcję 'Wymagania' w opisie szkolenia, aby upewnić się, że kurs jest odpowiedni dla Twojego poziomu.",
     },
     {
       id: "szkolenia-earnings",
-      question: `Ile zarobię po ukończeniu kursu manicure w ${cityName}?`,
+      question: `Ile zarobię po ukończeniu kursu manicure w ${locative}?`,
       answer:
         "Zarobki po kursie manicure zależą od wielu czynników: liczby klientek, lokalizacji, doświadczenia i oferowanych usług. Początkujące stylistki zarabiają zwykle 2000-4000 zł miesięcznie przy 15-25 klientkach. Doświadczone stylistki z 30-40 klientkami mogą zarabiać 4000-6000 zł miesięcznie. Instruktorki prowadzące własne szkolenia mogą zarabiać 6000-12000 zł miesięcznie. Zwrot z inwestycji w kurs następuje zwykle po 1-2 miesiącach pracy.",
     },
     {
       id: "szkolenia-worth",
-      question: `Czy warto robić kurs manicure w ${cityName} w 2026?`,
+      question: `Czy warto robić kurs manicure w ${locative} w 2026?`,
       answer:
         "Tak, zdecydowanie warto! Branża beauty w Polsce rozwija się dynamicznie, a zapotrzebowanie na profesjonalne usługi manicure rośnie każdego roku. Kurs manicure to inwestycja (800-2500 zł), która zwraca się zwykle po 1-2 miesiącach pracy. To elastyczna praca z możliwością rozwoju kariery - od pracy w salonie, przez własne studio, aż po prowadzenie szkoleń. W 2026 roku kursy z manicure hybrydowym i przedłużaniem paznokci są szczególnie poszukiwane.",
     },

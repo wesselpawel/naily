@@ -18,7 +18,13 @@ type FAQProps = {
   className?: string;
 };
 
-export default function FAQ({ items, initialOpenId, className }: FAQProps) {
+export default function FAQ({
+  items,
+  initialOpenId,
+  className,
+  title = "Najczęstsze pytania",
+  subtitle,
+}: FAQProps) {
   const defaultOpenId = useMemo(
     () => initialOpenId || items?.[0]?.id,
     [initialOpenId, items]
@@ -38,8 +44,11 @@ export default function FAQ({ items, initialOpenId, className }: FAQProps) {
             id="faq-heading"
             className="text-4xl lg:text-5xl font-baloo font-bold text-neutral-900"
           >
-            Najczęstsze pytania
+            {title}
           </h2>
+          {subtitle ? (
+            <p className="mt-3 max-w-3xl text-base text-neutral-600 font-poppins">{subtitle}</p>
+          ) : null}
         </div>
 
         <div className="mx-auto divide-y divide-neutral-200 border-y border-neutral-200 overflow-hidden bg-white">

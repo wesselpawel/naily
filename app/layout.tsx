@@ -52,9 +52,8 @@ export default async function RootLayout({
         <link rel="apple-touch-icon" href="/naily-logo.png" />
         <link rel="manifest" href="/manifest.json" />
         {/* Favicon links for better browser and search engine support */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/fav/favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="icon" href="/fav.png" type="image/png" />
+        <link rel="shortcut icon" href="/fav.png" />
         {/* JSON-LD Structured Data for Organization */}
         <script
           type="application/ld+json"
@@ -213,14 +212,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
+      { url: "/fav.png", type: "image/png" },
       { url: "/naily-logo.png", sizes: "192x192", type: "image/png" },
       { url: "/naily-logo-big.png", sizes: "512x512", type: "image/png" },
     ],
     apple: [
       { url: "/naily-logo.png", sizes: "180x180", type: "image/png" },
     ],
-    shortcut: "/favicon.ico",
+    shortcut: "/fav.png",
   },
   manifest: "/manifest.json",
   openGraph: {

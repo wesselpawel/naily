@@ -1,9 +1,9 @@
-import NotFound from "@/app/not-found";
 import Link from "next/link";
 import { ICity } from "@/types";
 import { getSingleCity } from "@/utils/getSingleCity";
 import { getCities } from "@/utils/getCities";
 import { Viewport } from "next";
+import { notFound } from "next/navigation";
 import FAQ, { type FaqItem } from "@/components/FAQ/FAQ";
 import { FaMapMarkerAlt, FaBriefcase, FaEnvelope, FaPhone } from "react-icons/fa";
 import Logic from "@/components/SearchBar/Logic";
@@ -22,7 +22,7 @@ export default async function OfertyPracyManicureCityPage({
   const city = await getSingleCity(cityParam);
 
   if (city?.error) {
-    return <NotFound />;
+    notFound();
   }
 
   const jobOffers = (await fetchJobOffersByCity(city.id)) as JobOffer[];
@@ -237,7 +237,16 @@ export async function generateMetadata({
   params: Promise<{ city: string }>;
 }) {
   const { city } = await params;
-  const cityData: ICity = await getSingleCity(city);
+  const cityData = await getSingleCity(city);
+  if (!cityData || "error" in cityData) {
+    return {
+      title: "404 | Naily",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
   const baseUrl = process.env.NEXT_PUBLIC_URL || "https://naily.pl";
   return {
     title: `Oferty pracy manicure ${cityData.name} - ogłoszenia salonów`,

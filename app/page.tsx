@@ -195,7 +195,7 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   icons: [
-    { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
+    { url: "/fav.png", type: "image/png" },
     { url: "/naily-logo.png", sizes: "192x192", type: "image/png" },
     { url: "/naily-logo-big.png", sizes: "512x512", type: "image/png" },
   ],

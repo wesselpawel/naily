@@ -10,7 +10,7 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/fav/favicon.ico",
+      "src": "/fav.png",
       "sizes": "48x48",
       "type": "image/png",
       "purpose": "any maskable"
@@ -38,14 +38,14 @@
       "short_name": "Szukaj",
       "description": "Wyszukaj stylistkę w Twoim mieście",
       "url": "/",
-      "icons": [{ "src": "/fav/favicon.ico", "sizes": "96x96" }]
+      "icons": [{ "src": "/fav.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
       "name": "Dashboard",
       "short_name": "Panel",
       "description": "Zarządzaj rezerwacjami",
       "url": "/dashboard",
-      "icons": [{ "src": "/fav/favicon.ico", "sizes": "96x96" }]
+      "icons": [{ "src": "/fav.png", "sizes": "96x96", "type": "image/png" }]
     }
   ]
 }

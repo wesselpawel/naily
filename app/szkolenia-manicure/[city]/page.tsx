@@ -1,10 +1,10 @@
-import NotFound from "@/app/not-found";
 import JoinNowButton from "@/components/AdCard/JoinNowButton";
 import Link from "next/link";
 import { ICity } from "@/types";
 import { getSingleCity } from "@/utils/getSingleCity";
 import { getCities } from "@/utils/getCities";
 import { Viewport } from "next";
+import { notFound } from "next/navigation";
 import Image from "next/image";
 import FAQ, { type FaqItem } from "@/components/FAQ/FAQ";
 import { FaCheck, FaMapMarkerAlt, FaClock, FaUser, FaCertificate, FaChartLine, FaDollarSign, FaGraduationCap, FaStar } from "react-icons/fa";
@@ -35,7 +35,7 @@ export default async function SzkoleniaCityPage({
   const city = await getSingleCity(cityParam);
 
   if (city?.error) {
-    return <NotFound />;
+    notFound();
   }
 
   const grammar = getPolishCityForms(city);
@@ -596,7 +596,16 @@ export async function generateMetadata({
   params: Promise<{ city: string }>;
 }) {
   const { city } = await params;
-  const cityData: ICity = await getSingleCity(city);
+  const cityData = await getSingleCity(city);
+  if (!cityData || "error" in cityData) {
+    return {
+      title: "404 | Naily",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
   const baseUrl = process.env.NEXT_PUBLIC_URL || "https://naily.pl";
   const forms = getPolishCityForms(cityData);
   const metaTitle = `Kurs stylizacji paznokci ${cityData.name} 2026 – ceny, szkolenia, zapisy`;

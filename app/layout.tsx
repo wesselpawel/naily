@@ -11,6 +11,7 @@ import Script from "next/script";
 import ModalManager from "@/components/ModalManager";
 import InitUser from "@/components/User/Init";
 import localFont from "next/font/local";
+import { getAuthorMetadata } from "@/lib/siteAuthor";
 
 const baloo = localFont({
   src: "../public/baloo.ttf",
@@ -194,12 +195,7 @@ export const metadata: Metadata = {
     "zdobienia paznokci",
     "stylistka paznokci online",
   ],
-  authors: [
-    {
-      name: "Naily",
-      url: "https://naily.pl",
-    },
-  ],
+  ...getAuthorMetadata(),
   publisher: "naily.pl",
   alternates: {
     canonical: "/",

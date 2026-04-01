@@ -344,7 +344,7 @@ export default function Header({
               </div>
               {/* Desktop Navigation */}
               <div className="hidden lg:flex w-full items-center gap-5 xl:gap-6 px-3">
-                <nav className="flex min-w-0 items-center gap-5 xl:gap-6 flex-1">
+                <nav className="flex shrink-0 items-center gap-5 xl:gap-6">
                   {/* Primary Navigation Items */}
                   
 
@@ -431,7 +431,7 @@ export default function Header({
                 </nav>
 
                 {/* Search Bar */}
-                <div className="flex min-w-[360px] flex-1 items-center justify-center">
+                <div className="flex min-w-0 flex-1 items-center">
                   <HeaderSearch 
                     placeholder="Szukaj miasta..." 
                     showSearchType={true}

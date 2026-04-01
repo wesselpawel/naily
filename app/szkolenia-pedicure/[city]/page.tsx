@@ -14,8 +14,12 @@ import TestimonialsCarousel from "@/components/Testimonials/Carousel";
 import { getCityUsers } from "@/utils/getCityUsers";
 import { getUsers as getAllUsers } from "@/utils/getUsers";
 import UserCard from "@/components/CityPage/UserCard";
-import TrainingKeywordRichContent from "@/components/CityPage/SEO/TrainingKeywordRichContent";
+import TrainingVisualGuide from "@/components/CityPage/SEO/TrainingVisualGuide";
 import TrainingCityHero from "@/components/CityPage/Sections/TrainingCityHero";
+import TrainingDifferentiatorsSection from "@/components/CityPage/Sections/TrainingDifferentiatorsSection";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
+import { getPolishCityForms, type PolishCityForms } from "@/utils/polishCityGrammar";
+import { getAuthorMetadata } from "@/lib/siteAuthor";
 
 // Enable ISR: Revalidate every hour to keep training offers fresh while maintaining fast static pages
 // Pages are generated on-demand (on first request) and then cached - no need to pre-generate all at build time
@@ -33,7 +37,7 @@ export default async function SzkoleniaPedicureCityPage({
     return <NotFound />;
   }
 
-  const isAugustow = String(cityParam).toLowerCase() === "augustow";
+  const grammar = getPolishCityForms(city);
 
   // Fetch training offers for this city
   const trainingOffers = await fetchTrainingOffersByCity(city.id) as TrainingOffer[];
@@ -98,85 +102,18 @@ export default async function SzkoleniaPedicureCityPage({
         serviceType="pedicure"
         baseRoute="kursy-pedicure"
         lastUpdated="02.01.2026"
+        headline={`Kurs pedicure ${city.name} - ceny, szkolenia i terminy 2026`}
+        description={`Szukasz profesjonalnego kursu pedicure w ${grammar.locative}? Sprawdź aktualne szkolenia prowadzone przez doświadczone instruktorki. Porównaj program, ceny i wybierz formułę nauki dopasowaną do Twojego poziomu.`}
       />
-     
-          <section className="relative py-14 sm:py-16 lg:py-20 px-5 sm:px-8 lg:px-12 bg-gradient-to-b from-white via-violet-50/30 to-violet-100/50 overflow-hidden">
-            <div className="absolute -top-20 -left-10 w-56 h-56 bg-violet-300/20 rounded-full blur-3xl" />
-            <div className="absolute -bottom-20 right-0 w-64 h-64 bg-blue-300/20 rounded-full blur-3xl" />
 
-            <div className="relative mx-auto max-w-[1600px] grid grid-cols-1 gap-8 lg:gap-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-stretch rounded-3xl border border-zinc-200/80 bg-white/90 backdrop-blur p-5 sm:p-8 shadow-[0_16px_50px_-28px_rgba(30,41,59,0.45)]">
-                <div className="relative w-full min-h-[260px] sm:min-h-[330px] overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100">
-                  <Image
-                    src="/pedicure/2.jpg"
-                    alt={`Kurs stylizacji paznokci ${city.name}`}
-                    fill
-                    priority
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="flex flex-col justify-center">
-                  <span className="inline-flex w-max items-center rounded-full bg-blue-50 text-blue-700 border border-blue-100 px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-wide uppercase">
-                    Program kursu
-                  </span>
-                  <h2 className="mt-4 font-baloo text-3xl sm:text-4xl font-bold text-neutral-900 leading-tight">
-                    Kurs pedicure {city.name} - program i szkolenia pedicure
-                  </h2>
-                  <p className="mt-4 text-base sm:text-lg text-neutral-600 font-poppins leading-relaxed">
-                    Szukasz kursu pedicure w {city.name}? Na naszej stronie znajdziesz <b>kursy i szkolenia pedicure</b> prowadzone przez sprawdzone instruktorki. Sprawdź <b>ile kosztuje kurs pedicure w {city.name}</b>.
-                  </p>
-                </div>
-              </div>
+      <TrainingVisualGuide
+        forms={grammar}
+        nearbyCities={nearbyCities}
+        basePath="kursy-pedicure"
+        serviceType="pedicure"
+      />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-stretch rounded-3xl border border-violet-200/70 bg-gradient-to-r from-violet-50/70 to-white p-5 sm:p-8 shadow-[0_16px_50px_-28px_rgba(124,58,237,0.45)]">
-                <div className="relative w-full min-h-[260px] sm:min-h-[330px] overflow-hidden rounded-2xl border border-violet-200 bg-violet-100">
-                  <Image
-                    src="/pedicure/1.jpg"
-                    alt={`Najczęściej wybierane szkolenia pedicure ${city.name}`}
-                    fill
-                    priority
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="flex flex-col justify-center">
-                  <span className="inline-flex w-max items-center rounded-full bg-violet-100 text-violet-700 border border-violet-200 px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-wide uppercase">
-                    Najpopularniejsze
-                  </span>
-                  <h2 className="mt-4 font-baloo text-2xl sm:text-3xl font-bold text-neutral-900 leading-tight">
-                    Najczęściej wybierane szkolenia pedicure w {city.name}
-                  </h2>
-                  <ul className="mt-5 space-y-3">
-                    <li className="flex gap-3">
-                      <div className="mt-0.5 h-6 w-6 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold shrink-0">
-                        ✓
-                      </div>
-                      <span className="text-base text-neutral-700 font-poppins leading-relaxed">
-                        <b>Kurs pedicure klasyczny {city.name}</b> - podstawy pracy, przygotowanie płytki i pierwsze zabiegi.
-                      </span>
-                    </li>
-                    <li className="flex gap-3">
-                      <div className="mt-0.5 h-6 w-6 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold shrink-0">
-                        ✓
-                      </div>
-                      <span className="text-base text-neutral-700 font-poppins leading-relaxed">
-                        <b>Kurs pedicure hybrydowy {city.name}</b> - trwałość, aplikacja i praca krok po kroku.
-                      </span>
-                    </li>
-                    <li className="flex gap-3">
-                      <div className="mt-0.5 h-6 w-6 rounded-full bg-violet-600 text-white flex items-center justify-center text-xs font-bold shrink-0">
-                        ✓
-                      </div>
-                      <span className="text-base text-neutral-700 font-poppins leading-relaxed">
-                        <b>Kurs stylizacji i zdobień {city.name}</b> - trendy, wzory i dobór produktów.
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </section>
+      <TrainingDifferentiatorsSection forms={grammar} serviceType="pedicure" />
         
       <section className="pb-20 px-6 bg-purple-50">
         <div className="container">
@@ -632,7 +569,12 @@ export default async function SzkoleniaPedicureCityPage({
 
       {/* FAQ */}
       <div className="py-20">
-        <FAQ className="animate-fade-in-up" items={getSzkoleniaFaq(city.name)} />
+        <FaqJsonLd items={getSzkoleniaFaq(grammar)} />
+        <FAQ
+          className="animate-fade-in-up"
+          title={`❓ Najczęściej zadawane pytania – kurs pedicure ${grammar.nominative}`}
+          items={getSzkoleniaFaq(grammar)}
+        />
       </div>
     </div>
   );
@@ -655,6 +597,7 @@ export async function generateMetadata({
   const cityData: ICity = await getSingleCity(city);
   const baseUrl = process.env.NEXT_PUBLIC_URL || "https://naily.pl";
   return {
+    ...getAuthorMetadata(cityData.id, cityData.name),
     title: `Kurs pedicure ${cityData.name} - Ile kosztuje?`,
     description: `Kurs pedicure ${cityData.name} 2026. Ile kosztuje kurs stylizacji paznokci i szkolenie hybryda w ${cityData.name}? Sprawdź terminy, cennik i opinie absolwentek.`,
     keywords: `kurs pedicure ${cityData.name}, kurs pedicure ${cityData.name} 2026, szkolenie pedicure ${cityData.name}, szkolenia pedicure ${cityData.name}, szkolenie hybryda ${cityData.name}, pedicure ${cityData.name}, pedicure hybrydowy ${cityData.name}, cennik pedicure ${cityData.name}, ile kosztuje kurs stylizacji paznokci ${cityData.name}, szkolenie pedicure kosmetyczny ${cityData.name}, salon pedicure ${cityData.name}, opinie absolwentek kursów pedicure`,
@@ -671,43 +614,68 @@ export async function generateMetadata({
   };
 }
 
-function getSzkoleniaFaq(cityName: string): FaqItem[] {
+function getSzkoleniaFaq(forms: PolishCityForms): FaqItem[] {
+  const { nominative, locative } = forms;
   return [
     {
       id: "szkolenia-booking",
-      question: `Jak zapisać się na szkolenie w ${cityName}?`,
+      question: `Jak zapisać się na szkolenie w ${locative}?`,
       answer:
         "Skontaktuj się bezpośrednio z instruktorem/instruktorką poprzez podany kontakt email lub telefon. Większość szkoleń wymaga wcześniejszej rezerwacji. Możesz również zarezerwować miejsce przez platformę Naily, gdzie znajdziesz dostępne terminy i szczegóły każdego kursu pedicure.",
     },
     {
       id: "szkolenia-price",
-      question: `Ile kosztuje kurs stylizacji paznokci w ${cityName}?`,
+      question: `Ile kosztuje kurs pedicure w ${locative}?`,
       answer:
         "Ceny kursów pedicure w 2026 roku wahają się od 1000 do 2800 złotych, w zależności od instruktora, długości kursu i zakresu materiału. Kurs podstawowy z pedicure klasycznym kosztuje zwykle 1000-1500 zł, kurs z pedicure hybrydowym 1500-2200 zł, a kompleksowy kurs z dodatkowymi zabiegami pielęgnacyjnymi (peeling, masaż, parafina) 2200-2800 zł. Szczegóły znajdziesz w opisie każdego szkolenia.",
     },
     {
       id: "szkolenia-certificate",
-      question: `Czy kurs pedicure w ${cityName} kończy się certyfikatem?`,
+      question: `Czy kurs pedicure w ${locative} kończy się certyfikatem?`,
       answer:
         "Tak, większość profesjonalnych szkoleń kończy się wydaniem certyfikatu ukończenia kursu. Certyfikat potwierdza Twoje umiejętności i może być pomocny przy szukaniu pracy w salonach lub przy otwieraniu własnej działalności. Niektóre kursy oferują również certyfikaty międzynarodowe. Szczegóły dotyczące certyfikacji znajdziesz w opisie szkolenia.",
     },
     {
       id: "szkolenia-level",
-      question: `Jakie są wymagania wstępne do kursu pedicure w ${cityName}?`,
+      question: `Jakie są wymagania wstępne do kursu pedicure w ${locative}?`,
       answer:
         "Większość kursów podstawowych nie wymaga żadnego wcześniejszego doświadczenia - są przeznaczone dla początkujących. Kursy zaawansowane mogą wymagać ukończenia kursu podstawowego lub posiadania już pewnego doświadczenia w pracy z paznokciami. Sprawdź sekcję 'Wymagania' w opisie szkolenia, aby upewnić się, że kurs jest odpowiedni dla Twojego poziomu.",
     },
     {
       id: "szkolenia-earnings",
-      question: `Ile zarobię po ukończeniu kursu pedicure w ${cityName}?`,
+      question: `Ile zarobię po ukończeniu kursu pedicure w ${locative}?`,
       answer:
         "Zarobki po kursie pedicure zależą od wielu czynników: liczby klientek, lokalizacji, doświadczenia i oferowanych usług. Początkujące stylistki zarabiają zwykle 2500-4500 zł miesięcznie przy 15-25 klientkach. Doświadczone stylistki z 30-45 klientkami mogą zarabiać 4500-7000 zł miesięcznie. Instruktorki prowadzące własne szkolenia mogą zarabiać 7000-15000 zł miesięcznie. Zwrot z inwestycji w kurs następuje zwykle po 1-2 miesiącach pracy. W sezonie letnim zarobki mogą być nawet o 30-50% wyższe.",
     },
     {
       id: "szkolenia-worth",
-      question: `Czy warto robić kurs pedicure w ${cityName} w 2026?`,
+      question: `Czy warto robić kurs pedicure w ${locative} w 2026?`,
       answer:
         "Tak, zdecydowanie warto! Branża beauty w Polsce rozwija się dynamicznie, a zapotrzebowanie na profesjonalne usługi pedicure rośnie każdego roku, szczególnie w sezonie letnim (maj-wrzesień). Kurs pedicure to stosunkowo niska inwestycja (1000-2800 zł), która zwraca się już po 1-2 miesiącach pracy. To elastyczna praca z możliwością rozwoju kariery - od pracy w salonie, przez własne studio, aż po prowadzenie szkoleń. W 2026 roku stylistki pedicure są bardzo poszukiwane, szczególnie te z umiejętnościami w pedicure hybrydowym i zabiegach pielęgnacyjnych stóp.",
+    },
+    {
+      id: "szkolenia-indywidualnie",
+      question: `Czy kurs pedicure w ${locative} może odbywać się indywidualnie?`,
+      answer:
+        "Tak. Szkolenie 1:1 pozwala dopasować tempo, poziom trudności i kolejność ćwiczeń do Twoich potrzeb. Taka forma sprawdza się zarówno na początku nauki, jak i wtedy, gdy chcesz uporządkować technikę lub rozszerzyć zakres usług.",
+    },
+    {
+      id: "szkolenia-modelka",
+      question: `Czy muszę mieć modelkę na kurs pedicure w ${locative}?`,
+      answer:
+        "Nie zawsze. Część szkoleń odbywa się na modelkach organizowanych przez kursantkę lub instruktorkę po wcześniejszym ustaleniu. Praca na realnym modelu pomaga lepiej poznać różne przypadki i przygotowuje do codziennej pracy z klientkami.",
+    },
+    {
+      id: "szkolenia-support",
+      question: `Czy po kursie pedicure w ${locative} mogę liczyć na wsparcie?`,
+      answer:
+        "Tak, wiele instruktorek oferuje wsparcie po szkoleniu. Obejmuje ono konsultacje techniczne, pomoc w doborze produktów, wskazówki dotyczące rozwoju usług, a czasem również kwestie marketingowe i organizacyjne.",
+    },
+    {
+      id: "szkolenia-financing",
+      question: `Czy kurs pedicure ${nominative} można sfinansować z Urzędu Pracy?`,
+      answer:
+        "W wielu przypadkach tak. Organizatorzy szkoleń często pomagają przygotować potrzebne dokumenty do dofinansowania z Urzędu Pracy lub innych programów wspierających rozwój zawodowy. Warto zapytać o taką możliwość jeszcze przed zapisem.",
     },
   ];
 }

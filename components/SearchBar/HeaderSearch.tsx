@@ -334,7 +334,7 @@ export default function HeaderSearch({
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className={`flex h-11 items-center gap-2 rounded-full px-4 text-sm font-semibold transition focus:outline-none focus:ring-4 ${activeSearchTypeStyles.pill} ${activeSearchTypeStyles.ring}`}
                 >
-                  <span className="max-w-[180px] truncate">
+                  <span className="max-w-[180px] truncate text-sm">
                     {searchTypeLabels[searchType]}
                   </span>
                   <FaChevronDown

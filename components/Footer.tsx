@@ -1,15 +1,23 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FaEnvelope, FaPhone, FaFacebook, FaInstagram } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import Image from "next/image";
-import logoBig from "@/public/naily-logo-big.png";
 import logo from "@/public/naily-logo2.png";
 import { isFeatureEnabled } from "@/lib/featureFlags";
+import { getAuthorCredit } from "@/lib/siteAuthor";
 
 export default function Footer() {
   const { user } = useSelector((state: RootState) => state.user);
+  const pathname = usePathname();
+  const cityRouteMatch = pathname?.match(
+    /^\/(kursy-pedicure|kursy-stylizacji-paznokci)\/([^/?#]+)$/
+  );
+  const authorCredit = cityRouteMatch
+    ? getAuthorCredit(cityRouteMatch[2])
+    : getAuthorCredit();
 
   return (
     <footer className="relative bg-neutral-950 text-white pb-5 lg:pb-0">
@@ -191,8 +199,19 @@ export default function Footer() {
           height={2000}
           className="w-full mt-24"
         />{" "} */}
-        <div className="mt-10 pt-6 text-neutral-500 text-sm text-center font-roboto">
-          © 2025 Naily. Wszystkie prawa zastrzeżone.
+        <div className="mt-10 pt-6 text-neutral-500 text-sm text-center font-roboto space-y-2">
+          <div>© 2025 Naily. Wszystkie prawa zastrzeżone.</div>
+          <div>
+            Autor strony:{" "}
+            <Link
+              href={authorCredit.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-300 hover:text-white transition-colors"
+            >
+              {authorCredit.label}
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

@@ -16,9 +16,11 @@ import { getUsers as getAllUsers } from "@/utils/getUsers";
 import { createLinkFromText } from "@/utils/createLinkFromText";
 import UserCard from "@/components/CityPage/UserCard";
 import TrainingCityHero from "@/components/CityPage/Sections/TrainingCityHero";
-import ManicureKursyProgrammaticArticle from "@/components/CityPage/SEO/ManicureKursyProgrammaticArticle";
+import TrainingVisualGuide from "@/components/CityPage/SEO/TrainingVisualGuide";
+import TrainingDifferentiatorsSection from "@/components/CityPage/Sections/TrainingDifferentiatorsSection";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import { getPolishCityForms, type PolishCityForms } from "@/utils/polishCityGrammar";
+import { getAuthorMetadata } from "@/lib/siteAuthor";
 
 // Enable ISR: Revalidate every hour to keep training offers fresh while maintaining fast static pages
 // Pages are generated on-demand (on first request) and then cached - no need to pre-generate all at build time
@@ -107,7 +109,13 @@ export default async function SzkoleniaCityPage({
         description={`Szukasz profesjonalnego kursu stylizacji paznokci w ${grammar.locative}? Sprawdź aktualne szkolenia manicure i zdobień paznokci prowadzone przez doświadczone instruktorki. Dowiedz się, ile kosztuje kurs, co obejmuje program oraz jak szybko możesz zacząć zarabiać jako stylistka paznokci.`}
       />
 
-      <ManicureKursyProgrammaticArticle forms={grammar} nearbyCities={nearbyCities} basePath="kursy-stylizacji-paznokci" />
+      <TrainingVisualGuide
+        forms={grammar}
+        nearbyCities={nearbyCities}
+        basePath="kursy-stylizacji-paznokci"
+        serviceType="manicure"
+      />
+      <TrainingDifferentiatorsSection forms={grammar} serviceType="manicure" />
 
       <section className="pb-20 px-6 bg-purple-50">
         <div className="container">
@@ -594,6 +602,7 @@ export async function generateMetadata({
   const metaTitle = `Kurs stylizacji paznokci ${cityData.name} 2026 – ceny, szkolenia, zapisy`;
   const metaDescription = `Sprawdź kursy stylizacji paznokci w ${forms.locative}. Aktualne ceny, program szkoleń i terminy 2026. Zapisz się i zacznij zarabiać jako stylistka paznokci.`;
   return {
+    ...getAuthorMetadata(cityData.id, cityData.name),
     title: metaTitle,
     description: metaDescription,
     keywords: `kurs stylizacji paznokci ${cityData.name}, kurs paznokci ${cityData.name} cena, szkolenie manicure ${cityData.name}, kurs manicure hybrydowy ${cityData.name}, kurs paznokci dla początkujących ${cityData.name}, kurs stylizacji paznokci ${cityData.name} 2026, szkolenia manicure ${cityData.name}, manicure ${cityData.name}`,
@@ -666,6 +675,30 @@ function getSzkoleniaFaq(forms: PolishCityForms): FaqItem[] {
       question: `Czy warto robić kurs manicure w ${locative} w 2026?`,
       answer:
         "Tak, zdecydowanie warto! Branża beauty w Polsce rozwija się dynamicznie, a zapotrzebowanie na profesjonalne usługi manicure rośnie każdego roku. Kurs manicure to inwestycja (800-2500 zł), która zwraca się zwykle po 1-2 miesiącach pracy. To elastyczna praca z możliwością rozwoju kariery - od pracy w salonie, przez własne studio, aż po prowadzenie szkoleń. W 2026 roku kursy z manicure hybrydowym i przedłużaniem paznokci są szczególnie poszukiwane.",
+    },
+    {
+      id: "szkolenia-indywidualnie",
+      question: `Czy kurs stylizacji paznokci w ${locative} może odbywać się indywidualnie?`,
+      answer:
+        "Tak. Wiele szkoleń odbywa się w formule 1:1, dzięki czemu instruktorka może dopasować tempo, zakres materiału i kolejność ćwiczeń do Twojego poziomu. To dobra opcja zarówno dla osób początkujących, jak i dla stylistek, które chcą doszlifować konkretną technikę.",
+    },
+    {
+      id: "szkolenia-modelka",
+      question: `Czy muszę mieć modelkę na kurs manicure w ${locative}?`,
+      answer:
+        "Nie zawsze. Część instruktorek prosi o zorganizowanie modelki, ale wiele z nich pomaga też w jej znalezieniu po wcześniejszym ustaleniu. Praca na modelce jest cenna, bo pozwala uczyć się na realnych dłoniach i różnorodnych przypadkach.",
+    },
+    {
+      id: "szkolenia-support",
+      question: `Czy po kursie manicure w ${locative} mogę liczyć na dalsze wsparcie?`,
+      answer:
+        "Tak, wiele szkoleń obejmuje wsparcie po kursie. Możesz skonsultować technikę, dobór produktów, organizację pracy, a czasem także marketing i prowadzenie social mediów. To szczególnie pomocne na początku pracy z klientkami.",
+    },
+    {
+      id: "szkolenia-financing",
+      question: `Czy kurs paznokci w ${locative} można sfinansować z Urzędu Pracy?`,
+      answer:
+        "W wielu przypadkach tak. Część organizatorów szkoleń wspiera uczestniczki w przygotowaniu dokumentów do dofinansowania z Urzędu Pracy lub innych programów aktywizacyjnych. Najlepiej zapytać o to przed rezerwacją terminu.",
     },
   ];
 }

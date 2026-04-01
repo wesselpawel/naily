@@ -193,7 +193,7 @@ export type TrainingOffer = {
 };
 
 // Job offer types
-/** Lead z formularza na stronach /manicure/[slug], /pedicure/[slug] lub modala rezerwacji — kolekcja `formLead` */
+/** Lead z formularza na stronach miastowych lub modala rezerwacji — kolekcja `formLead` */
 export type FormLead = {
   id: string;
   name: string;

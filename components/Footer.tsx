@@ -30,8 +30,8 @@ export default function Footer() {
               className="w-24"
             />
             <p className="text-neutral-300 text-sm leading-relaxed">
-              Profesjonalne usługi, konkurencyjne ceny i wygodne
-              rezerwacje online.
+              Kursy stylizacji paznokci i szkolenia pedicure w całej Polsce —
+              znajdź termin i lokalizację dla siebie.
             </p>
             <div className="flex space-x-4">
               <Link
@@ -66,10 +66,10 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/kariera"
+                  href="/oferty-pracy-manicure"
                   className="text-neutral-300 hover:text-white transition-colors text-sm flex items-center gap-2"
                 >
-                  Oferty pracy manicure
+                  Oferty pracy w branży beauty
                 </Link>
               </li>
               {isFeatureEnabled("blog") && (
@@ -121,7 +121,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/manicure/warszawa"
+                  href="/kursy-stylizacji-paznokci/warszawa"
                   className="text-neutral-300 hover:text-white transition-colors text-sm"
                 >
                   Warszawa
@@ -129,7 +129,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/manicure/krakow"
+                  href="/kursy-stylizacji-paznokci/krakow"
                   className="text-neutral-300 hover:text-white transition-colors text-sm"
                 >
                   Kraków
@@ -137,7 +137,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/manicure/wroclaw"
+                  href="/kursy-stylizacji-paznokci/wroclaw"
                   className="text-neutral-300 hover:text-white transition-colors text-sm"
                 >
                   Wrocław
@@ -145,7 +145,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/manicure/poznan"
+                  href="/kursy-stylizacji-paznokci/poznan"
                   className="text-neutral-300 hover:text-white transition-colors text-sm"
                 >
                   Poznań
@@ -153,7 +153,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/manicure/gdansk"
+                  href="/kursy-stylizacji-paznokci/gdansk"
                   className="text-neutral-300 hover:text-white transition-colors text-sm"
                 >
                   Gdańsk
@@ -161,7 +161,7 @@ export default function Footer() {
               </li>
               <li>
                 <span className="text-neutral-400 text-xs">
-                  Manicure w całej Polsce
+                  Kursy w całej Polsce
                 </span>
               </li>
             </ul>

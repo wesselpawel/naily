@@ -3,12 +3,12 @@ import Link from "next/link";
 
 interface NearbyCitiesSectionProps {
   nearbyCities: ICity[];
-  serviceType: "manicure" | "pedicure";
+  /** Zachowane dla kompatybilności; oba bloki linkują do tras kursów. */
+  serviceType?: "kursy-stylizacji" | "kursy-pedicure";
 }
 
 export default function NearbyCitiesSection({
   nearbyCities,
-  serviceType,
 }: NearbyCitiesSectionProps) {
   return (
     <section className="py-20 px-6 bg-white">
@@ -19,13 +19,13 @@ export default function NearbyCitiesSection({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h2 className="text-2xl lg:text-3xl font-baloo font-bold text-neutral-900 mb-4">
-              Manicure
+              Kurs stylizacji paznokci
             </h2>
             <div className="flex flex-wrap gap-6">
               {nearbyCities.map((c) => (
                 <Link
                   key={c.id}
-                  href={`/manicure/${c.id}`}
+                  href={`/kursy-stylizacji-paznokci/${c.id}`}
                   className="group py-3 relative w-max text-xl text-black hover:border-blue-800 hover:text-blue-800"
                 >
                   {`${c.name}`}
@@ -36,13 +36,13 @@ export default function NearbyCitiesSection({
           </div>
           <div>
             <h2 className="text-2xl lg:text-3xl font-baloo font-bold text-neutral-900 mb-4">
-              Pedicure
+              Kurs pedicure
             </h2>
             <div className="flex flex-wrap gap-6">
               {nearbyCities.map((c) => (
                 <Link
                   key={c.id}
-                  href={`/pedicure/${c.id}`}
+                  href={`/kursy-pedicure/${c.id}`}
                   className="group py-3 relative w-max text-xl text-black hover:border-blue-800 hover:text-blue-800"
                 >
                   {`${c.name}`}

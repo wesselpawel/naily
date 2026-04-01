@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 import { getUsers } from "@/utils/getUsers";
-import { getCities } from "@/utils/getCities";
-import { ICity } from "@/types";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 3600; // Revalidate every hour
@@ -12,7 +10,7 @@ export async function GET() {
     const baseUrl = process.env.NEXT_PUBLIC_URL || "https://naily.pl";
 
     // Use Promise.allSettled to prevent one failure from breaking the entire sitemap
-    const [usersResult, postsResult, citiesResult] = await Promise.allSettled([
+    const [usersResult, postsResult] = await Promise.allSettled([
       getUsers(),
       // Prefer API list with real posts if available; fall back to samples util
       fetch(`${baseUrl}/api/posts/list`, {
@@ -24,17 +22,10 @@ export async function GET() {
           return r.json();
         })
         .catch(() => []),
-      getCities(),
     ]);
 
     const users = usersResult.status === "fulfilled" ? usersResult.value : [];
     const posts = postsResult.status === "fulfilled" ? postsResult.value : [];
-    const allCities = citiesResult.status === "fulfilled" ? citiesResult.value : [];
-
-  // Filter out villages, only include cities (matching the page behavior)
-  const cities = Array.isArray(allCities)
-    ? allCities.filter((city: ICity) => city.type === "city")
-    : [];
 
   const userEntries = Array.isArray(users)
     ? users
@@ -64,23 +55,11 @@ export async function GET() {
         .filter(Boolean)
     : [];
 
-  const manicureCityEntries = cities
-    .map((c: ICity) => {
-      const slug = c?.id || c?.name;
-      if (!slug) return null;
-      return {
-        url: `${baseUrl}/manicure/${slug}`,
-        changefreq: "weekly",
-        priority: 0.6,
-      };
-    })
-    .filter(Boolean);
-
   const base = [
     { url: `${baseUrl}/`, changefreq: "weekly", priority: 1 },
     { url: `${baseUrl}/blog`, changefreq: "weekly", priority: 0.7 },
     { url: `${baseUrl}/szkolenia`, changefreq: "weekly", priority: 0.8 },
-    { url: `${baseUrl}/kariera`, changefreq: "weekly", priority: 0.8 },
+    { url: `${baseUrl}/oferty-pracy-manicure`, changefreq: "weekly", priority: 0.8 },
   ];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -104,15 +83,6 @@ ${userEntries
   )
   .join("\n")}
 ${postEntries
-  .map(
-    (entry: any) => `  <url>
-    <loc>${entry.url}</loc>
-    <changefreq>${entry.changefreq}</changefreq>
-    <priority>${entry.priority}</priority>
-  </url>`
-  )
-  .join("\n")}
-${manicureCityEntries
   .map(
     (entry: any) => `  <url>
     <loc>${entry.url}</loc>

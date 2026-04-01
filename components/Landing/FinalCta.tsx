@@ -16,12 +16,12 @@ export default function FinalCta() {
           />
           <div className="max-w-3xl">
             <h2 className="text-zinc-800 text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 leading-tight font-baloo">
-              Twórz piękne stylizacje.
+              Ucz, rozwijaj się, buduj markę.
             </h2>
 
             <p className="text-lg text-zinc-800 mb-6 sm:mb-8 max-w-2xl leading-relaxed font-medium">
-              Dołącz do społeczności specjalistek, pokaż swoje prace i pozwól
-              łatwo Cię odkryć.
+              Dołącz do społeczności instruktorek i stylistek — promuj szkolenia,
+              kursy i swoją praktykę w jednym miejscu.
             </p>
 
             <OpenRegisterButton className="w-full lg:w-max group relative px-6 sm:px-8 py-3 sm:py-4 bg-blue-600 text-white rounded-full font-semibold text-xl lg:text-lg transition-all duration-200 hover:bg-blue-700 overflow-hidden">

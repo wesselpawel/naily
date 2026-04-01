@@ -17,7 +17,7 @@ export async function GET() {
       : [];
 
   const base = [
-    { url: `${baseUrl}/kariera`, changefreq: "weekly", priority: 0.8 },
+    { url: `${baseUrl}/oferty-pracy-manicure`, changefreq: "weekly", priority: 0.8 },
   ];
 
   const cityEntries = cities
@@ -25,7 +25,7 @@ export async function GET() {
       const slug = c?.id || c?.name;
       if (!slug) return null;
       return {
-        url: `${baseUrl}/kariera/${slug}`,
+        url: `${baseUrl}/oferty-pracy-manicure/${slug}`,
         changefreq: "weekly",
         priority: 0.7,
       };
@@ -67,7 +67,7 @@ ${cityEntries
     const errorSitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>${process.env.NEXT_PUBLIC_URL || "https://naily.pl"}/kariera</loc>
+    <loc>${process.env.NEXT_PUBLIC_URL || "https://naily.pl"}/oferty-pracy-manicure</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -97,7 +97,7 @@ export default function SearchResults({ query: initialQuery }: { query: string }
                     {cities.map((city) => (
                       <Link
                         key={city.id}
-                        href={`/manicure/${city.id}`}
+                        href={`/kursy-stylizacji-paznokci/${city.id}`}
                         className="px-3 py-1 bg-white text-blue-700 rounded-full text-sm hover:bg-blue-100 transition-colors"
                       >
                         {city.name}
@@ -122,7 +122,7 @@ export default function SearchResults({ query: initialQuery }: { query: string }
                 Nie znaleziono wyników dla &quot;{query}&quot;
               </p>
               <p className="text-gray-500 text-sm mb-6">
-                Spróbuj wyszukać po nazwie miasta lub usłudze (np. &quot;Warszawa&quot;, &quot;manicure&quot;, &quot;Warszawa manicure&quot;)
+                Spróbuj wyszukać po nazwie miasta lub słowach z branży (np. &quot;Warszawa&quot;, &quot;kurs stylizacji&quot;, &quot;szkolenie pedicure&quot;)
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
@@ -132,7 +132,7 @@ export default function SearchResults({ query: initialQuery }: { query: string }
                   Szukaj szkoleń
                 </Link>
                 <Link
-                  href="/kariera"
+                  href="/oferty-pracy-manicure"
                   className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                 >
                   Oferty pracy manicure

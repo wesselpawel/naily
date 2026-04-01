@@ -38,7 +38,7 @@ export default function CareerTrainingSection({ city }: CareerTrainingSectionPro
           </Link>
 
           <Link
-            href={`/kariera/${city.id}`}
+            href={`/oferty-pracy-manicure/${city.id}`}
             className="group bg-white rounded-xl p-8 lg:p-10 hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-blue-300"
           >
             <div className="flex flex-col h-full">

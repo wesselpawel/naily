@@ -23,11 +23,11 @@ export default function ComparisonSection() {
       <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16 animate-fade-in">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-zinc-800 font-baloo mb-3 sm:mb-4 md:mb-6 leading-tight">
-            System rezerwacji dla specjalistek
+            Platforma dla instruktorek i przyszłych stylistek
           </h2>
           <p className="font-poppins text-neutral-600 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed px-2">
-            Zyskaj dostęp do zaawansowanych funkcji, klientek manicure i
-            pedicure w Naily
+            Naily łączy szkolenia stylizacji paznokci, kursy pedicure i narzędzia
+            do rozwoju w branży beauty
           </p>
         </div>
 
@@ -40,7 +40,7 @@ export default function ComparisonSection() {
                   <span className="text-white font-bold text-xs sm:text-sm">?</span>
                 </div>
                 <h3 className="text-base sm:text-lg md:text-xl font-semibold text-neutral-900">
-                  Popularne aplikacje rezerwacyjne
+                  Ogólne narzędzia bez fokusu na szkolenia
                 </h3>
               </div>
             </div>
@@ -49,7 +49,7 @@ export default function ComparisonSection() {
               <div className="space-y-3 sm:space-y-4">
                 <FeatureItem
                   icon={<FaCheck className="text-green-500" />}
-                  text="Podstawowe funkcje rezerwacji"
+                  text="Podstawowa obecność online"
                 />
                 <FeatureItem
                   icon={<FaCheck className="text-green-500" />}
@@ -114,7 +114,7 @@ export default function ComparisonSection() {
               <div className="space-y-3 sm:space-y-4">
                 <FeatureItem
                   icon={<FaCheck className="text-green-500" />}
-                  text="0% prowizji od rezerwacji"
+                  text="Widoczność kursów i szkoleń w miastach"
                   highlight
                 />
                 <FeatureItem

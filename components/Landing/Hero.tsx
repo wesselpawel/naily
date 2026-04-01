@@ -17,15 +17,15 @@ export default function Hero() {
                 src={image1}
                 width={400}
                 height={400}
-                alt="Zarezerwuj manicure"
+                alt="Krok 1 — wybierz kurs"
                 className="max-w-[250px]"
               />
               <h2 className="text-2xl font-gotham font-bold mt-12 mb-4">
-                Umów wizytę w aplikacji
+                Wybierz miasto i typ szkolenia
               </h2>
               <p className="font-poppins">
-                Wybierz najlepszą stylistkę paznokci w Twoim mieście i
-                zarezerwuj dogodny termin w aplikacji Naily – szybko i wygodnie.
+                Sprawdź podstronę kursu stylizacji paznokci lub pedicure w swojej
+                okolicy — program, często zadawane pytania i jak się zapisać.
               </p>
             </div>
             <div className="flex flex-col mt-6 w-full">
@@ -33,15 +33,15 @@ export default function Hero() {
                 src={image2}
                 width={400}
                 height={400}
-                alt="Zarezerwuj manicure"
+                alt="Krok 2 — kontakt z organizatorem"
                 className="max-w-[250px]"
               />
               <h2 className="text-2xl font-gotham font-bold mt-12 mb-4">
-                Otrzymaj potwierdzenie
+                Skontaktuj się z organizatorem
               </h2>
               <p className="font-poppins">
-                Twoja rezerwacja zostaje zatwierdzona – dostajesz powiadomienie
-                i masz pewność, że Twój termin jest zarezerwowany.
+                Na stronie kursu znajdziesz dane kontaktowe i warunki zapisu —
+                ustal szczegóły bezpośrednio z akademią lub instruktorką.
               </p>
             </div>
             <div className="flex flex-col mt-6 w-full">
@@ -49,15 +49,15 @@ export default function Hero() {
                 src={image3}
                 width={400}
                 height={400}
-                alt="Zarezerwuj manicure"
+                alt="Krok 3 — rozwój zawodowy"
                 className="max-w-[250px]"
               />
               <h2 className="text-2xl font-gotham font-bold mt-12 mb-4">
-                Ciesz się perfekcyjnymi paznokciami
+                Rozwijaj warsztat i karierę
               </h2>
               <p className="font-poppins">
-                Odpocznij, zrelaksuj się i pozwól, by stylistka zadbała o Twój
-                wymarzony manicure lub pedicure.
+                Po szkoleniu możesz budować praktykę, szukać pracy w branży
+                beauty albo samodzielnie prowadzić kursy dla innych.
               </p>
             </div>
           </div>
@@ -67,7 +67,7 @@ export default function Hero() {
                 href="#reserve"
                 className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-white text-blue-700 rounded-full font-semibold text-sm sm:text-base md:text-lg transition-all duration-200 hover:bg-neutral-100 overflow-hidden shadow-md text-center border border-blue-200"
               >
-                Zarezerwuj wizytę
+                Zobacz szkolenia
               </a>
               <OpenRegisterButton className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-blue-600 text-white rounded-full font-semibold text-sm sm:text-base md:text-lg transition-all duration-200 hover:bg-blue-700 overflow-hidden shadow-md w-full text-center">
                 Załóż konto profesjonalne

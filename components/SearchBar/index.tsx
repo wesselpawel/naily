@@ -16,7 +16,7 @@ export default function SearchBar() {
               <div onClick={() => router.push("/login")} className="mb-6 sm:mb-8 lg:mb-20 px-4 sm:px-0">
                 <h1 className="font-baloo text-2xl sm:text-3xl md:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-zinc-800 mb-3 sm:mb-4 leading-tight">
                   <span className="inline-block animate-fade-in-up relative">
-                    Mniej wiadomości, więcej <br className="hidden sm:block" /> klientek
+                    Kursy stylizacji paznokci <br className="hidden sm:block" /> i szkolenia pedicure
                   </span>
                   {/* <span className="inline-block animate-fade-in-up relative">
                     Manicure
@@ -26,16 +26,16 @@ export default function SearchBar() {
                   </span> */}
                 </h1>
                 <p className="text-black text-sm sm:text-base lg:text-lg animate-fade-in-up animation-delay-400 mb-4 font-poppins">
-                  Klientki widzą ceny i wolne terminy, zanim napiszą.
+                  Znajdź termin i miasto — od kursu podstawowego po zaawansowane szkolenia.
                 </p>
                 
                 <div className="font-poppins text-xs sm:text-sm gap-2 sm:gap-3 flex flex-row items-center flex-wrap">
 
                 <div className="rounded-lg px-2 py-1 sm:px-3 sm:py-2 bg-blue-400 text-white whitespace-nowrap">
-                  Rezerwacje
+                  Stylizacja paznokci
                 </div>
                 <div className="rounded-lg px-2 py-1 sm:px-3 sm:py-2 bg-green-400 text-white whitespace-nowrap">
-                  Szkolenia
+                  Pedicure
                 </div>
                 
 

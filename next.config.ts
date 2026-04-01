@@ -33,6 +33,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/kariera",
+        destination: "/oferty-pracy-manicure",
+        permanent: true,
+      },
+      {
+        source: "/kariera/:city",
+        destination: "/oferty-pracy-manicure/:city",
+        permanent: true,
+      },
+      {
         source: "/szkolenia-manicure/:city",
         destination: "/kursy-stylizacji-paznokci/:city",
         permanent: true,
@@ -50,6 +60,16 @@ const nextConfig: NextConfig = {
       {
         source: "/szkolenia-kursy-pedicure",
         destination: "/kursy-pedicure",
+        permanent: true,
+      },
+      {
+        source: "/manicure/:city",
+        destination: "/kursy-stylizacji-paznokci/:city",
+        permanent: true,
+      },
+      {
+        source: "/pedicure/:city",
+        destination: "/kursy-pedicure/:city",
         permanent: true,
       },
     ];

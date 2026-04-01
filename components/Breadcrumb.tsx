@@ -44,7 +44,10 @@ export default function Breadcrumb() {
         label = "Szkolenia Manicure";
       } else if (segment === "szkolenia-pedicure") {
         label = "Szkolenia Pedicure";
-      } else if (segment === "kariera") {
+      } else if (
+        segment === "oferty-pracy-manicure" ||
+        segment === "kariera"
+      ) {
         label = "Oferty pracy manicure";
       } else if (segment === "blog") {
         label = "Blog";

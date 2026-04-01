@@ -13,13 +13,12 @@ interface City {
 export default function Logic({
   slugCity,
   variant = "stacked",
-  baseRoute = "manicure",
+  baseRoute = "kursy-stylizacji-paznokci",
 }: {
   slugCity?: string;
   variant?: "inline" | "stacked";
   baseRoute?:
-    | "manicure"
-    | "kariera"
+    | "oferty-pracy-manicure"
     | "szkolenia-manicure"
     | "szkolenia-pedicure"
     | "kursy-stylizacji-paznokci"
@@ -172,7 +171,7 @@ export default function Logic({
       baseRoute === "szkolenia-pedicure" ||
       baseRoute === "kursy-stylizacji-paznokci" ||
       baseRoute === "kursy-pedicure" ||
-      baseRoute === "kariera"
+      baseRoute === "oferty-pracy-manicure"
     ) {
       // If we have a city ID from dropdown selection, use it
       if (city.id) {
@@ -200,7 +199,7 @@ export default function Logic({
         }
       }
     } else {
-      // For manicure (default) - use smart search if service keyword found
+      // Domyślnie (kursy / strona główna) — przy słowach usługowych idź do wyników
       if (hasServiceKeyword(query)) {
         router.push(`/wyniki?q=${encodeURIComponent(query)}`);
       } else if (city.id) {
@@ -238,7 +237,7 @@ export default function Logic({
                   search();
                 }
               }}
-              placeholder={slugCity || "np. Warszawa, manicure, Warszawa manicure"}
+              placeholder={slugCity || "np. Warszawa, kurs stylizacji, szkolenie pedicure"}
               disabled={isNavigating}
               className="w-full bg-white border border-neutral-300 rounded-full placeholder:text-neutral-500 text-zinc-800 pl-12 pr-12 py-4 text-base focus:outline-none transition-all duration-300"
               autoComplete="off"
@@ -355,7 +354,7 @@ export default function Logic({
                   search();
                 }
               }}
-              placeholder={slugCity || "np. Warszawa, manicure, Warszawa manicure"}
+              placeholder={slugCity || "np. Warszawa, kurs stylizacji, szkolenie pedicure"}
               disabled={isNavigating}
               className="w-full bg-white border border-neutral-300 rounded-full placeholder:text-neutral-500 text-zinc-800 pl-16 pr-12 py-5 text-base lg:text-xl focus:outline-none transition-all duration-300"
               autoComplete="off"

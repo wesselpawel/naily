@@ -17,8 +17,9 @@ export default function Home() {
         "@type": "WebPage",
         "@id": `${baseUrl}#webpage`,
         url: baseUrl,
-        name: "Naily: Platforma dla Stylistek Manicure i Pedicure",
-        description: "Naily to największa platforma łącząca klientki ze sprawdzonymi stylistkami manicure i pedicure w całej Polsce.",
+        name: "Naily: Kursy stylizacji paznokci i szkolenia pedicure",
+        description:
+          "Naily to miejsce, w którym znajdziesz kursy stylizacji paznokci, szkolenia pedicure oraz oferty pracy dla specjalistek w całej Polsce.",
         inLanguage: "pl-PL",
         isPartOf: {
           "@id": `${baseUrl}#website`,
@@ -103,10 +104,11 @@ function WhatMakesUsUniqueSection() {
             </svg>
           </div>
           <h2 className="font-baloo text-3xl sm:text-4xl md:text-5xl xl:text-6xl mb-4 text-zinc-800 font-bold leading-tight">
-            Tysiące stylistek i kosmetyczek
+            Instruktorki, akademie i przyszłe stylistki
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-zinc-600 font-poppins leading-relaxed">
-            Dołącz do społeczności stylistek, instruktorek i salonów, które już korzystają z Naily
+            Społeczność osób, które uczą, rozwijają się na kursach stylizacji i
+            szkoleniach pedicure oraz budują karierę w branży beauty
           </p>
         </div>
         {/* Social Proof Section */}
@@ -121,25 +123,25 @@ const landingFaq: FaqItem[] = [
     id: "what-is-naily",
     question: "Czym jest Naily?",
     answer:
-      "Naily łączy klientki ze sprawdzonymi stylistkami manicure i pedicure. W jednym miejscu znajdziesz profile, cenniki i wolne terminy.",
+      "Naily skupia się na rozwoju w branży paznokci: kursach stylizacji, szkoleniach pedicure i ofertach pracy. W jednym miejscu znajdziesz informacje o terminach i lokalizacjach w swoim mieście.",
   },
   {
     id: "how-to-book",
-    question: "Jak zarezerwować wizytę?",
+    question: "Jak znaleźć kurs lub szkolenie w moim mieście?",
     answer:
-      "Wyszukaj miasto, wybierz specjalistkę, a następnie wybierz termin. Otrzymasz powiadomienie z potwierdzeniem rezerwacji.",
+      "Wejdź w sekcję szkoleń, wpisz miasto lub wybierz je z listy — zobaczysz dedykowane podstrony z programem, często zadawanymi pytaniami i kontaktem do organizatora.",
   },
   {
     id: "is-free",
-    question: "Czy korzystanie jest darmowe?",
+    question: "Czy przeglądanie ofert jest darmowe?",
     answer:
-      "Tak, dla klientek korzystanie z Naily jest bezpłatne. Specjalistki mogą wykupić plan, aby zwiększyć widoczność.",
+      "Tak, wyszukiwanie kursów i informacji na Naily jest bezpłatne. Ceny i warunki zapisów ustalają organizatorzy szkoleń.",
   },
   {
     id: "cancellation",
-    question: "Czy mogę odwołać lub zmienić termin?",
+    question: "Czy mogę odwołać udział w szkoleniu?",
     answer:
-      "Tak, zmiany są możliwe zgodnie z polityką wybranej specjalistki. Informacje znajdziesz na profilu i w potwierdzeniu rezerwacji.",
+      "Zasady rezygnacji i zwrotów zależą od organizatora kursu. Szczegóły znajdziesz w opisie szkolenia lub po kontakcie bezpośrednim.",
   },
 ];
 
@@ -153,31 +155,22 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_URL || "https://naily.pl"),
-  title: "Rezerwacje Manicure - Naily",
+  title: "Kursy stylizacji paznokci i szkolenia pedicure — Naily",
   description:
-    "Dołącz jako Stylistka manicure lub Salon Kosmetyczny i otrzymuj rezerwacje od swoich klientek.",
+    "Znajdź kurs stylizacji paznokci lub szkolenie pedicure w swoim mieście. Oferty dla przyszłych stylistek, instruktorek i salonów.",
   keywords: [
-    "kosmetyczki blisko Ciebie",
+    "kurs stylizacji paznokci",
+    "szkolenie manicure",
+    "szkolenie pedicure",
+    "kurs hybrydowy",
+    "kurs żelowy",
     "naily",
     "naily.pl",
-    "manicure",
-    "pedicure",
-    "stylistki paznokci",
-    "salony paznokci",
-    "rezerwacje online",
-    "cennik manicure",
-    "cennik pedicure",
-    "szkolenia manicure",
-    "szkolenia pedicure",
+    "instruktorka stylizacji paznokci",
+    "akademia paznokci",
+    "kursy paznokci w Polsce",
     "oferty pracy stylistka",
-    "manicure hybrydowy",
-    "pedicure hybrydowy",
-    "przedłużanie paznokci",
-    "zdobienia paznokci",
-    "stylistka paznokci online",
-    "rezerwacja wizyty manicure",
-    "najlepsze salony paznokci",
-    "stylistka paznokci w mieście",
+    "rozwój w branży beauty",
   ],
   authors: [
     {
@@ -211,22 +204,22 @@ export const metadata: Metadata = {
     url: "https://naily.pl",
     siteName: "Naily",
     locale: "pl_PL",
-    title: "Rezerwacje Manicure - Naily",
+    title: "Kursy stylizacji paznokci i szkolenia pedicure — Naily",
     description:
-      "Dołącz jako Kosmetyczka lub Salon Kosmetyczny i otrzymuj rezerwacje od swoich klientek.",
+      "Kursy stylizacji paznokci, szkolenia pedicure i oferty pracy — wyszukaj w swoim mieście.",
     images: [
       {
         url: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&h=630&fit=crop&crop=center&auto=format",
         width: 1200,
         height: 630,
-        alt: "Naily - Platforma dla stylistek manicure i pedicure - Rezerwacje online",
+        alt: "Naily — kursy stylizacji paznokci i szkolenia pedicure",
         type: "image/jpeg",
       },
       {
         url: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&h=630&fit=crop&crop=center&auto=format",
         width: 1200,
         height: 630,
-        alt: "Profesjonalny manicure w salonie - Naily",
+        alt: "Szkolenie stylizacji paznokci — Naily",
         type: "image/jpeg",
       },
     ],
@@ -234,13 +227,13 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     site: "@Naily",
-    title: "Rezerwacje Manicure - Naily",
+    title: "Kursy stylizacji paznokci i szkolenia pedicure — Naily",
     description:
-      "Dołącz jako Kosmetyczka lub Salon Kosmetyczny i otrzymuj rezerwacje od swoich klientek.",
+      "Kursy stylizacji paznokci, szkolenia pedicure i oferty pracy — wyszukaj w swoim mieście.",
     images: [
       {
         url: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=1200&h=630&fit=crop&crop=center&auto=format",
-        alt: "Naily - Platforma dla stylistek manicure i pedicure",
+        alt: "Naily — kursy stylizacji paznokci i szkolenia pedicure",
       },
     ],
   },

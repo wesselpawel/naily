@@ -18,6 +18,10 @@ export default function CityHero({
   headline,
   description,
 }: CityHeroProps) {
+  const baseRoute =
+    serviceType === "manicure"
+      ? "kursy-stylizacji-paznokci"
+      : "kursy-pedicure";
   const serviceName = serviceType === "manicure" ? "Manicure" : "Pedicure";
   const title =
     headline ?? `${serviceName} ${city.name} - Cennik 2026`;
@@ -73,7 +77,7 @@ export default function CityHero({
                   Zmień miasto
                 </p>
                 <div className="rounded-2xl bg-white p-2 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/80">
-                  <Logic slugCity={city.name} variant="inline" />
+                  <Logic slugCity={city.name} variant="inline" baseRoute={baseRoute} />
                 </div>
               </div>
 

@@ -299,14 +299,12 @@ export default function Header({
         className={`${pathname.includes("/zarezerwuj") ? "bg-white" : ""} ${pathname === "/login" ? "fixed" : "sticky"} ${
           pathname === "/login" && "bg-transparent"
         } top-0 left-0 right-0 z-[100] ${pathname === "/" && "bg-white"} ${
-          (pathname.includes("/manicure/") ||
-            pathname.includes("/pedicure/") ||
-            pathname.includes("/kursy-stylizacji-paznokci") ||
+          (pathname.includes("/kursy-stylizacji-paznokci") ||
             pathname.includes("/kursy-pedicure")) &&
           "bg-purple-50"
         } 
         ${pathname.includes("/szkolenia") && "bg-purple-50"}
-        ${pathname.includes("/kariera") && "bg-purple-50"}
+        ${pathname.includes("/oferty-pracy-manicure") && "bg-purple-50"}
         ${pathname === "/influencer-program" && "bg-purple-50"}
         ${pathname === "/kreator-profilu" && "bg-white"}
         `}
@@ -332,7 +330,7 @@ export default function Header({
                   <Link href="/" className="flex-shrink-0">
                     <Image
                       src={logo}
-                      alt="Logo Naily.pl - Pierwszej strony internetowej poświęconej manicurzystkom i pedicurzystkom"
+                      alt="Logo Naily.pl — kursy stylizacji paznokci i szkolenia pedicure"
                       width={200}
                       height={150}
                       className="h-auto w-20 sm:w-24 lg:w-28 max-w-full"
@@ -345,8 +343,8 @@ export default function Header({
                 </div>
               </div>
               {/* Desktop Navigation */}
-              <div className="hidden lg:flex rounded-xl p-2 h-max space-x-6 xl:space-x-8 px-3 items-center w-full justify-between">
-                <nav className="flex items-center space-x-6 xl:space-x-8 flex-1">
+              <div className="hidden lg:flex w-full items-center gap-5 xl:gap-6 px-3">
+                <nav className="flex min-w-0 items-center gap-5 xl:gap-6 flex-1">
                   {/* Primary Navigation Items */}
                   
 
@@ -422,17 +420,7 @@ export default function Header({
                       )}
                     </button>
                   )}
-                </nav>
-
-                {/* Search Bar */}
-                <div className="flex items-center mx-4 flex-shrink-0">
-                  <HeaderSearch 
-                    placeholder="Szukaj miasta..." 
-                    showSearchType={true}
-                    defaultSearchType="manicure"
-                  />
-                </div>
-                <Link
+                  <Link
                     href="/szkolenia"
                     className={`text-base transition-colors duration-200 font-semibold whitespace-nowrap hover:opacity-80 ${
                       pathname === "/login" ? "text-white" : "text-zinc-800"
@@ -440,9 +428,20 @@ export default function Header({
                   >
                     Szkolenia
                   </Link>
+                </nav>
+
+                {/* Search Bar */}
+                <div className="flex min-w-[360px] flex-1 items-center justify-center">
+                  <HeaderSearch 
+                    placeholder="Szukaj miasta..." 
+                    showSearchType={true}
+                    defaultSearchType="kursyStylizacji"
+                    variant="desktopHeader"
+                  />
+                </div>
                  
                 {/* User Actions - Secondary Navigation */}
-                <div className="flex items-center space-x-4 xl:space-x-6 ml-4 pl-4 xl:pl-6 border-l border-neutral-200">
+                <div className="flex shrink-0 items-center space-x-4 xl:space-x-6 pl-5 xl:pl-6 border-l border-neutral-200">
                   {user?.uid ? (
                     <>
                       {isDashboardRoute ? (
@@ -507,7 +506,7 @@ export default function Header({
                     </Link>
                   )}
                 </div>
-                <div className="ml-4 pl-4 xl:pl-6 border-l border-neutral-200">
+                <div className="shrink-0 pl-5 xl:pl-6 border-l border-neutral-200">
                 <DownloadApp />
                 </div>
               </div>
@@ -612,7 +611,8 @@ export default function Header({
                 <HeaderSearch 
                   placeholder="Szukaj miasta..." 
                   showSearchType={true}
-                  defaultSearchType="manicure"
+                  defaultSearchType="kursyStylizacji"
+                  variant="mobileMenu"
                 />
               </div>
               
@@ -679,7 +679,7 @@ export default function Header({
                   </Link>
 
                   <Link
-                    href="/kariera"
+                    href="/oferty-pracy-manicure"
                     onClick={(e) => {
                       e.stopPropagation();
                       setIsMobileMenuOpen(false);
@@ -690,7 +690,7 @@ export default function Header({
                       <FaGem className="text-base text-blue-700" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <span className="font-semibold text-base block leading-tight">Oferty pracy manicure</span>
+                      <span className="font-semibold text-base block leading-tight">Oferty pracy w branży beauty</span>
                       <p className="text-xs text-neutral-500 mt-0.5 leading-tight">
                         Oferty pracy w salonach
                       </p>

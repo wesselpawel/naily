@@ -47,34 +47,61 @@ export default function DashboardClient({ user, dashboardData }: DashboardClient
   const [authChecked, setAuthChecked] = useState<boolean>(false);
 
   useEffect(() => {
-    // Listen to Firebase auth state changes    
-    const unsubscribe = onAuthStateChanged(auth, (authUser: any | null) => {
-      setFirebaseUser(authUser);
-      setAuthChecked(true);
+    let unsubscribe: (() => void) | undefined;
+    let redirectTimer: ReturnType<typeof setTimeout> | undefined;
 
-      if (!authUser) {
-        // No user authenticated, redirect to home
-        router.push("/");
-        return;
+    const clearRedirect = () => {
+      if (redirectTimer) {
+        clearTimeout(redirectTimer);
+        redirectTimer = undefined;
       }
+    };
 
-      // User is authenticated via Firebase
-      // Use Redux user if available, otherwise fall back to server-provided user
-      const currentUser = reduxUser?.uid ? reduxUser : (user || null);
-      
-      if (currentUser) {
-        setIsLoading(false);
-
-        // Check if user needs fast configuration (only if we have Redux user)
-        if (reduxUser?.uid && !reduxUser?.configured) {
-          setShowFastConfig(true);
+    const scheduleRedirectHome = (delayMs: number) => {
+      clearRedirect();
+      redirectTimer = setTimeout(() => {
+        if (!auth.currentUser && !(user?.uid)) {
+          router.replace("/");
         }
-      }
-      // If authUser exists but neither reduxUser nor server user is available yet,
-      // wait a bit for InitUser to load Redux state, then use server user as fallback
-    });
+      }, delayMs);
+    };
 
-    return () => unsubscribe();
+    (async () => {
+      await auth.authStateReady();
+      unsubscribe = onAuthStateChanged(auth, (authUser: any | null) => {
+        setFirebaseUser(authUser);
+        setAuthChecked(true);
+
+        if (!authUser) {
+          // Server already validated `uid` cookie and passed `user` — Firebase can lag
+          // behind persistence or token refresh; don't bounce the user off /dashboard.
+          if (user?.uid) {
+            clearRedirect();
+            setIsLoading(false);
+            return;
+          }
+          scheduleRedirectHome(900);
+          return;
+        }
+
+        clearRedirect();
+
+        const currentUser = reduxUser?.uid ? reduxUser : user || null;
+
+        if (currentUser) {
+          setIsLoading(false);
+
+          if (reduxUser?.uid && !reduxUser?.configured) {
+            setShowFastConfig(true);
+          }
+        }
+      });
+    })();
+
+    return () => {
+      clearRedirect();
+      unsubscribe?.();
+    };
   }, [router, reduxUser, user]);
 
   // Fallback: If Firebase auth exists but Redux user hasn't loaded after a timeout,

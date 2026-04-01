@@ -12,7 +12,6 @@ export async function GET() {
     `${baseUrl}/sitemap-1.xml`,
     `${baseUrl}/sitemap-kariera.xml`,
     `${baseUrl}/sitemap-szkolenia.xml`,
-    `${baseUrl}/sitemap-pedicure.xml`,
     `${baseUrl}/sitemap-szkolenia-pedicure.xml`,
   ];
 

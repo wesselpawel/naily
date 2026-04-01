@@ -1,6 +1,7 @@
 "use server";
 
 import { User } from "@/types";
+import { getServerAppOrigin } from "@/utils/getServerAppOrigin";
 
 export interface DashboardData {
   stats: {
@@ -19,11 +20,32 @@ export interface DashboardData {
 
 export async function fetchDashboardData(user: User): Promise<DashboardData> {
   try {
-    // Fetch user reservations from the API
+    const phone =
+      user.phoneNumber != null && String(user.phoneNumber).trim() !== ""
+        ? String(user.phoneNumber)
+        : "";
+    if (!phone) {
+      return {
+        stats: {
+          totalReservations: 0,
+          completedServices: 0,
+          pendingReservations: 0,
+          cancelledReservations: 0,
+          totalSpent: 0,
+          averageSpentPerService: 0,
+          thisMonthReservations: 0,
+          thisMonthSpent: 0,
+        },
+        recentReservations: [],
+        topServices: [],
+      };
+    }
+
+    const origin = await getServerAppOrigin();
     const reservationsResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/reservations?phone=${user.phoneNumber}`,
+      `${origin}/api/reservations?phone=${encodeURIComponent(phone)}`,
       {
-        cache: "no-store", // Always fetch fresh data for dashboard
+        cache: "no-store",
       }
     );
 

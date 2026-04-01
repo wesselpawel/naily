@@ -4,11 +4,9 @@ import { getCities } from "@/utils/getCities";
 import { ICity } from "@/types";
 import Logic from "@/components/SearchBar/Logic";
 
-// Enable ISR: Revalidate every 6 hours to keep city list fresh while maintaining fast static pages
-export const revalidate = 21600; // 6 hours
+export const revalidate = 21600;
 
-export default async function KarieraPage() {
-  // Get cities excluding villages
+export default async function OfertyPracyManicurePage() {
   const allCities = await getCities();
   const cities = allCities.filter((city: ICity) => city.type === "city");
 
@@ -25,7 +23,11 @@ export default async function KarieraPage() {
               stanowiska dla stylistek paznokci w całej Polsce.
             </p>
             <div className="mt-6">
-              <Logic slugCity="" variant="inline" baseRoute="kariera" />
+              <Logic
+                slugCity=""
+                variant="inline"
+                baseRoute="oferty-pracy-manicure"
+              />
             </div>
           </div>
 
@@ -33,7 +35,7 @@ export default async function KarieraPage() {
             {cities.slice(0, 30).map((city: ICity) => (
               <Link
                 key={city.id}
-                href={`/kariera/${city.id}`}
+                href={`/oferty-pracy-manicure/${city.id}`}
                 className="group bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-300 border border-gray-200"
               >
                 <h3 className="text-xl font-baloo font-bold text-zinc-800 mb-2 group-hover:text-blue-600 transition-colors">
@@ -71,5 +73,7 @@ export const metadata: Metadata = {
       "Sprawdź oferty pracy manicure i pedicure w salonach w całej Polsce.",
     type: "website",
   },
+  alternates: {
+    canonical: "/oferty-pracy-manicure",
+  },
 };
-
